@@ -33,6 +33,14 @@ export default function ScreenshotFrame({
           priority={priority}
           className="w-full h-auto"
         />
+        {/* Mask version number in top-right corner */}
+        <div
+          className="absolute top-0 right-0 w-24 h-8 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at top right, rgba(13,13,15,1) 40%, rgba(13,13,15,0) 100%)",
+          }}
+        />
       </div>
       {caption && (
         <figcaption className="mt-3 text-center text-sm text-fd-gray">
