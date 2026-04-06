@@ -2,16 +2,28 @@ import ScreenshotFrame from "./ScreenshotFrame";
 
 const phases = [
   {
-    name: "Phase 1 — Style and Tone",
+    number: "1",
+    name: "Style and Tone",
     desc: "How proactive or restrained your copilot should be. Empathy, pacing, explanation style.",
+    image: "/images/screenshots/6_03_45_PM.webp",
+    alt: "Flight School Phase 1 — role selection: Founder/CEO, CTO, Solo Developer, PM",
+    caption: "Define your role and communication style",
   },
   {
-    name: "Phase 2 — Rules and Boundaries",
+    number: "2",
+    name: "Rules and Boundaries",
     desc: "What your AI can and can't do without your approval. Protected systems. Evidence standards.",
+    image: "/images/screenshots/6_03_31_PM.webp",
+    alt: "Flight School Phase 2 — Create a New Project with 6-step governance flow",
+    caption: "Structured setup: Basics, Intent, Location, Features, Review, Governance",
   },
   {
-    name: "Phase 3 — Governance and Procedures",
+    number: "3",
+    name: "Governance and Procedures",
     desc: "Tool routing, project scope, output behavior, team shape.",
+    image: "/images/screenshots/6_04_04_PM.webp",
+    alt: "Flight School Phase 3 — Skill Building + Setup with AI-proposed structure",
+    caption: "Describe your skill in plain language. AI proposes the structure.",
   },
 ];
 
@@ -19,67 +31,62 @@ export default function FlightSchool() {
   return (
     <section className="py-24 border-t border-fd-border">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="max-w-2xl">
-          <span className="text-xs font-semibold tracking-widest text-fd-orange uppercase">
-            Onboarding
-          </span>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Start with Flight School.
-          </h2>
-          <p className="mt-4 text-base text-fd-gray">
-            Before you touch a codebase, FlightDeck configures your AI copilot.
-            Structured onboarding in minutes.
-          </p>
-        </div>
-
-        <div className="mt-12 grid lg:grid-cols-2 gap-16 items-start">
+        {/* Intro with welcome screenshot */}
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <p className="text-base text-fd-gray leading-relaxed">
+            <span className="text-xs font-semibold tracking-widest text-fd-orange uppercase">
+              Onboarding
+            </span>
+            <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight">
+              Start with Flight School.
+            </h2>
+            <p className="mt-4 text-base text-fd-gray leading-relaxed">
+              Before you touch a codebase, FlightDeck configures your AI
+              copilot. Structured onboarding in minutes.
+            </p>
+            <p className="mt-4 text-base text-fd-gray leading-relaxed">
               Tell FlightDeck how you work, how you think, what your product is,
               and how you want your AI crew to behave. It generates CLAUDE.md,
               SOUL.md, and a full governance stack — formal documents that define
               how your AI assistant should operate inside your project. The more
               specific you are, the better your entire build experience becomes.
             </p>
-
-            {/* Phase blocks */}
-            <div className="mt-10 space-y-6">
-              {phases.map((phase) => (
-                <div
-                  key={phase.name}
-                  className="rounded-lg border border-fd-border bg-fd-surface p-5"
-                >
-                  <h3 className="text-sm font-semibold text-fd-gray-light">
-                    {phase.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-fd-gray">{phase.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <blockquote className="mt-8 border-l-2 border-fd-orange/40 pl-4 text-sm text-fd-gray-light italic">
+            <blockquote className="mt-6 border-l-2 border-fd-orange/40 pl-4 text-sm text-fd-gray-light italic">
               Nothing is saved until you review and approve at the end.
             </blockquote>
           </div>
+          <ScreenshotFrame
+            src="/images/screenshots/6_03_17_PM.webp"
+            alt="Welcome to Flight School — overview showing three phases: Style and Tone, Rules and Boundaries, Governance and Procedures"
+            caption="Flight School walks you through three phases"
+          />
+        </div>
 
-          {/* Visuals */}
-          <div className="space-y-6">
-            <ScreenshotFrame
-              src="/images/screenshots/6_03_31_PM.webp"
-              alt="Create a New Project — 6-step structured onboarding flow"
-              caption="Structured project creation flow"
-            />
-            <div className="grid grid-cols-2 gap-4">
+        {/* Three equal phase cards */}
+        <div className="mt-20 grid md:grid-cols-3 gap-6">
+          {phases.map((phase) => (
+            <div
+              key={phase.number}
+              className="rounded-xl border border-fd-border bg-fd-surface p-5 flex flex-col"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full bg-fd-orange/10 text-fd-orange text-sm font-bold">
+                  {phase.number}
+                </span>
+                <h3 className="text-base font-semibold text-white">
+                  {phase.name}
+                </h3>
+              </div>
               <ScreenshotFrame
-                src="/images/screenshots/6_04_04_PM.webp"
-                alt="Flight School welcome screen"
+                src={phase.image}
+                alt={phase.alt}
+                caption={phase.caption}
               />
-              <ScreenshotFrame
-                src="/images/screenshots/6_03_45_PM.webp"
-                alt="Flight School role selection"
-              />
+              <p className="mt-4 text-sm text-fd-gray leading-relaxed">
+                {phase.desc}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* Flight Mode / Dev Mode callout */}

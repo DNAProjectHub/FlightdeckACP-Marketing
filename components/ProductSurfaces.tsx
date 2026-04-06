@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
 import ScreenshotFrame from "./ScreenshotFrame";
 
 const surfaces = [
@@ -20,7 +23,7 @@ const surfaces = [
     copy: "Danny is Pilot. ChatGPT is Architect. Claude is Reasoner. Claude Code is Implementer. Every agent has a defined role, a fuel gauge, and a full comms log. You manage a team, not a chatbox.",
   },
   {
-    name: "Document Manifest",
+    name: "Documents",
     image: "/images/screenshots/6_02_04_PM.webp",
     alt: "FlightDeck Document Manifest — classified documents with health checks",
     copy: "Every plan, spec, wireframe, and asset — classified, health-checked, and linked to the work it drives.",
@@ -35,7 +38,7 @@ const surfaces = [
     name: "Flight Logs",
     image: "/images/screenshots/6_02_21_PM.webp",
     alt: "FlightDeck Flight Logs — session history and commit receipts",
-    copy: "Session history, decisions, commits, and receipts. You never ask \"what happened last Tuesday?\" again.",
+    copy: 'Session history, decisions, commits, and receipts. You never ask "what happened last Tuesday?" again.',
   },
   {
     name: "Maintenance",
@@ -52,6 +55,21 @@ const surfaces = [
 ];
 
 export default function ProductSurfaces() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const next = useCallback(
+    () => setActive((i) => (i + 1) % surfaces.length),
+    []
+  );
+
+  // Auto-cycle every 5s unless paused
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(next, 5000);
+    return () => clearInterval(id);
+  }, [paused, next]);
+
   return (
     <section className="py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -65,25 +83,90 @@ export default function ProductSurfaces() {
           </p>
         </div>
 
-        {/* Surface cards grid */}
-        <div className="mt-16 grid md:grid-cols-2 gap-8">
-          {surfaces.map((surface) => (
-            <div
-              key={surface.name}
-              className="group rounded-xl border border-fd-border bg-fd-surface p-6 transition-all hover:border-fd-orange/20"
+        {/* Tab pills */}
+        <div
+          className="mt-12 flex flex-wrap justify-center gap-2"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          {surfaces.map((s, i) => (
+            <button
+              key={s.name}
+              onClick={() => {
+                setActive(i);
+                setPaused(true);
+              }}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                i === active
+                  ? "bg-fd-orange text-fd-black"
+                  : "bg-fd-surface border border-fd-border text-fd-gray hover:text-fd-gray-light hover:border-fd-orange/30"
+              }`}
             >
-              <ScreenshotFrame
-                src={surface.image}
-                alt={surface.alt}
-              />
-              <h3 className="mt-5 text-lg font-semibold text-white">
-                {surface.name}
-              </h3>
-              <p className="mt-2 text-sm text-fd-gray leading-relaxed">
-                {surface.copy}
-              </p>
-            </div>
+              {s.name}
+            </button>
           ))}
+        </div>
+
+        {/* Active surface display */}
+        <div
+          className="mt-10"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="relative">
+            {surfaces.map((surface, i) => (
+              <div
+                key={surface.name}
+                className={`transition-all duration-500 ${
+                  i === active
+                    ? "opacity-100 relative"
+                    : "opacity-0 absolute inset-0 pointer-events-none"
+                }`}
+              >
+                <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
+                  <ScreenshotFrame src={surface.image} alt={surface.alt} />
+                  <div className="flex flex-col justify-center">
+                    <h3 className="text-2xl font-bold text-white">
+                      {surface.name}
+                    </h3>
+                    <p className="mt-3 text-base text-fd-gray leading-relaxed">
+                      {surface.copy}
+                    </p>
+                    {/* Progress bar */}
+                    <div className="mt-6 flex gap-1.5">
+                      {surfaces.map((_, j) => (
+                        <div
+                          key={j}
+                          className="h-0.5 flex-1 rounded-full overflow-hidden bg-fd-border cursor-pointer"
+                          onClick={() => {
+                            setActive(j);
+                            setPaused(true);
+                          }}
+                        >
+                          <div
+                            className={`h-full rounded-full transition-all ${
+                              j === active
+                                ? "bg-fd-orange w-full"
+                                : j < active
+                                  ? "bg-fd-orange/30 w-full"
+                                  : "bg-transparent w-0"
+                            }`}
+                            style={
+                              j === active && !paused
+                                ? {
+                                    animation: "progress 5s linear",
+                                  }
+                                : undefined
+                            }
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Feature Callouts */}
@@ -127,6 +210,17 @@ export default function ProductSurfaces() {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes progress {
+          from {
+            width: 0%;
+          }
+          to {
+            width: 100%;
+          }
+        }
+      `}</style>
     </section>
   );
 }
