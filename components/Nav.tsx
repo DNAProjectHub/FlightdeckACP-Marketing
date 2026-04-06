@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function Nav() {
@@ -21,18 +20,7 @@ export default function Nav() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-        <Link href="/" className="block">
-          <Image
-            src="/images/logo.png"
-            alt="FlightDeck"
-            width={160}
-            height={58}
-            priority
-            className="h-8 w-auto"
-          />
-        </Link>
-
+      <div className="mx-auto max-w-6xl flex items-center justify-end px-6 py-3">
         <Link
           href="/signup"
           className="rounded-lg bg-fd-orange px-5 py-2 text-sm font-medium text-fd-black transition-all hover:brightness-110 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)]"

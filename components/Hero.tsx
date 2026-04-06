@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import ScreenshotFrame from "./ScreenshotFrame";
 
@@ -18,18 +19,31 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
+          <Image
+            src="/images/logo.png"
+            alt="FlightDeck"
+            width={551}
+            height={199}
+            priority
+            className="h-14 sm:h-16 w-auto mb-8"
+          />
+
           <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1]">
-            The Control Plane
+            Plan the Work.
             <br />
-            for AI Work
+            Ship the Plan.
           </h1>
 
-          <p className="mt-6 text-lg text-fd-gray leading-relaxed max-w-lg">
+          <p className="mt-6 text-xl text-fd-gray-light font-medium leading-snug max-w-lg">
+            The Control Plane for AI Work
+          </p>
+
+          <p className="mt-3 text-base text-fd-gray leading-relaxed max-w-lg">
             Coordinate agents, govern execution, and ship real software — as a
             system, not a series of conversations.
           </p>
 
-          <p className="mt-4 text-base text-fd-gray-light font-medium">
+          <p className="mt-4 text-sm text-fd-gray font-medium">
             Built for the solo founder who refuses to lose the plot.
           </p>
 
