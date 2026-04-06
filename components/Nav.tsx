@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import pkg from "@/package.json";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -22,7 +23,7 @@ export default function Nav() {
     >
       <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-3">
         <span className="text-[11px] font-mono text-fd-gray/40 tracking-wider uppercase">
-          v1.0 beta
+          v{pkg.version} beta
         </span>
         <Link
           href="/signup"
