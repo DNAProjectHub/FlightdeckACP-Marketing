@@ -1,6 +1,8 @@
 "use client";
 
-const logos = [
+import { motion } from "framer-motion";
+
+const tools = [
   {
     name: "GitHub",
     svg: `<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>`,
@@ -35,11 +37,11 @@ const logos = [
   },
   {
     name: "TypeScript",
-    svg: `<path d="M0 12v12h24V0H0zm19.34-1.47c.64.15 1.13.42 1.49.83.19.22.48.67.5.77 0 .03-1.77 1.24-2.85 1.95-.04.03-.2-.14-.38-.4-.52-.77-1.07-1.1-1.88-1.14-1.19-.06-1.96.66-1.95 1.81 0 .35.05.55.2.82.31.56.85.9 2.37 1.49 2.81 1.08 4.01 1.8 4.72 2.81.78 1.12.95 2.91.43 4.27-.57 1.47-1.99 2.47-3.99 2.82-.62.1-2.09.09-2.76-.04-1.46-.27-2.84-1.05-3.7-2.09-.33-.4-.98-1.43-.94-1.49l.4-.26 1.02-.6 .78-.45.16.23c.22.35.72.93 1.01 1.17.83.7 1.98.88 2.87.47.78-.36 1.18-1.22.9-2.01-.18-.5-.56-.85-1.58-1.38l-1.42-.7c-1.63-.78-2.78-1.93-3.14-3.14-.12-.41-.14-1.44-.05-1.9.36-1.74 1.65-2.94 3.53-3.3.65-.12 2.14-.07 2.78.09z"/><path d="M14 10h-2v8.5c0 4.64-.03 8.56-.06 8.7-.16.56-.59 1.01-1.17 1.21-.23.08-.63.1-1.27.08l-.95-.04V26h2V10z"/>`,
+    svg: `<path d="M0 12v12h24V0H0zm19.34-1.47c.64.15 1.13.42 1.49.83.19.22.48.67.5.77 0 .03-1.77 1.24-2.85 1.95-.04.03-.2-.14-.38-.4-.52-.77-1.07-1.1-1.88-1.14-1.19-.06-1.96.66-1.95 1.81 0 .35.05.55.2.82.31.56.85.9 2.37 1.49 2.81 1.08 4.01 1.8 4.72 2.81.78 1.12.95 2.91.43 4.27-.57 1.47-1.99 2.47-3.99 2.82-.62.1-2.09.09-2.76-.04-1.46-.27-2.84-1.05-3.7-2.09-.33-.4-.98-1.43-.94-1.49l.4-.26 1.02-.6.78-.45.16.23c.22.35.72.93 1.01 1.17.83.7 1.98.88 2.87.47.78-.36 1.18-1.22.9-2.01-.18-.5-.56-.85-1.58-1.38l-1.42-.7c-1.63-.78-2.78-1.93-3.14-3.14-.12-.41-.14-1.44-.05-1.9.36-1.74 1.65-2.94 3.53-3.3.65-.12 2.14-.07 2.78.09z"/>`,
   },
   {
     name: "React",
-    svg: `<path d="M12 13.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/><path fill="none" stroke="currentColor" stroke-width="1" d="M12 7.5c5.25 0 9.5 2.01 9.5 4.5S17.25 16.5 12 16.5 2.5 14.49 2.5 12 6.75 7.5 12 7.5z"/><path fill="none" stroke="currentColor" stroke-width="1" d="M8.21 9.75c2.63-4.55 6.13-7.24 8.29-6 2.16 1.25 1.76 5.57-.87 10.12-2.63 4.55-6.13 7.24-8.29 6-2.16-1.25-1.76-5.57.87-10.12z"/><path fill="none" stroke="currentColor" stroke-width="1" d="M8.21 14.25c-2.63-4.55-3.03-8.87-.87-10.12 2.16-1.24 5.66 1.45 8.29 6 2.63 4.55 3.03 8.87.87 10.12-2.16 1.24-5.66-1.45-8.29-6z"/>`,
+    svg: `<circle cx="12" cy="12" r="2.2"/><ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" stroke-width="1"/><ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" stroke-width="1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" stroke-width="1" transform="rotate(120 12 12)"/>`,
   },
   {
     name: "Node.js",
@@ -63,37 +65,53 @@ const logos = [
   },
 ];
 
-// Double the array for seamless loop
-const doubled = [...logos, ...logos];
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.04,
+      delayChildren: 0.6,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
 
 export default function ProofStrip() {
   return (
-    <div className="w-full overflow-hidden border-t border-fd-border/50 bg-fd-black/50 backdrop-blur-sm">
-      <div className="py-6 text-center">
-        <p className="text-sm text-fd-gray mb-5">
-          Works with the stack you already use
-        </p>
-        <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <div className="flex gap-10 animate-marquee w-max">
-            {doubled.map((logo, i) => (
-              <div
-                key={`${logo.name}-${i}`}
-                className="group relative flex flex-col items-center gap-2 shrink-0"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-6 h-6 text-fd-gray/30 transition-all duration-300 group-hover:text-fd-gray-light group-hover:drop-shadow-[0_0_8px_rgba(249,115,22,0.3)]"
-                  dangerouslySetInnerHTML={{ __html: logo.svg }}
-                />
-                <span className="text-[10px] text-fd-gray/0 group-hover:text-fd-gray transition-all duration-300 whitespace-nowrap">
-                  {logo.name}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+    <div className="w-full border-t border-fd-border/50 py-8">
+      <p className="text-center text-sm text-fd-gray/70 mb-6">
+        Works with the stack you already use
+      </p>
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="flex flex-wrap justify-center items-center gap-x-8 gap-y-5 max-w-3xl mx-auto px-6"
+      >
+        {tools.map((tool) => (
+          <motion.div
+            key={tool.name}
+            variants={item}
+            className="group flex flex-col items-center gap-1.5"
+          >
+            <div className="relative p-2.5 rounded-lg transition-all duration-300 group-hover:bg-fd-surface group-hover:shadow-[0_0_16px_rgba(249,115,22,0.08)]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 text-fd-gray/25 transition-colors duration-300 group-hover:text-fd-gray-light"
+                dangerouslySetInnerHTML={{ __html: tool.svg }}
+              />
+            </div>
+            <span className="text-[10px] text-fd-gray/40 transition-colors duration-300 group-hover:text-fd-gray">
+              {tool.name}
+            </span>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 }
