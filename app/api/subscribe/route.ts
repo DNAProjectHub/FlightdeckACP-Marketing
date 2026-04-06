@@ -4,7 +4,7 @@ import { subscribe } from "@/lib/mailchimp";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, firstName, whatBuilding } = body;
+    const { email, firstName, lastName, company, phone, whatBuilding } = body;
 
     if (!email || typeof email !== "string") {
       return NextResponse.json(
@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await subscribe({ email, firstName, whatBuilding });
+    await subscribe({ email, firstName, lastName, company, phone, whatBuilding });
     return NextResponse.json({ success: true });
   } catch (error) {
     const message =

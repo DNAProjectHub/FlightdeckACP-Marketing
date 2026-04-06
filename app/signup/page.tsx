@@ -6,7 +6,10 @@ import Nav from "@/components/Nav";
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [phone, setPhone] = useState("");
   const [whatBuilding, setWhatBuilding] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">(
     "idle"
@@ -21,7 +24,14 @@ export default function SignupPage() {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, firstName, whatBuilding }),
+        body: JSON.stringify({
+          email,
+          firstName,
+          lastName,
+          company,
+          phone,
+          whatBuilding,
+        }),
       });
       if (res.ok) {
         setStatus("done");
@@ -32,6 +42,9 @@ export default function SignupPage() {
       setStatus("error");
     }
   };
+
+  const inputClass =
+    "w-full rounded-lg border border-fd-border bg-fd-surface px-4 py-3 text-sm text-white placeholder:text-fd-gray/50 focus:outline-none focus:border-fd-orange/50 transition-colors";
 
   return (
     <>
@@ -62,21 +75,39 @@ export default function SignupPage() {
               </p>
 
               <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-                <div>
-                  <label
-                    htmlFor="firstName"
-                    className="block text-sm font-medium text-fd-gray-light mb-1.5"
-                  >
-                    First name
-                  </label>
-                  <input
-                    id="firstName"
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full rounded-lg border border-fd-border bg-fd-surface px-4 py-3 text-sm text-white placeholder:text-fd-gray/50 focus:outline-none focus:border-fd-orange/50 transition-colors"
-                    placeholder="Danny"
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="firstName"
+                      className="block text-sm font-medium text-fd-gray-light mb-1.5"
+                    >
+                      First name
+                    </label>
+                    <input
+                      id="firstName"
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className={inputClass}
+                      placeholder="Danny"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="lastName"
+                      className="block text-sm font-medium text-fd-gray-light mb-1.5"
+                    >
+                      Last name
+                    </label>
+                    <input
+                      id="lastName"
+                      type="text"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className={inputClass}
+                      placeholder="K"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -92,8 +123,44 @@ export default function SignupPage() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-lg border border-fd-border bg-fd-surface px-4 py-3 text-sm text-white placeholder:text-fd-gray/50 focus:outline-none focus:border-fd-orange/50 transition-colors"
+                    className={inputClass}
                     placeholder="you@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="company"
+                    className="block text-sm font-medium text-fd-gray-light mb-1.5"
+                  >
+                    Company{" "}
+                    <span className="text-fd-gray text-xs">(optional)</span>
+                  </label>
+                  <input
+                    id="company"
+                    type="text"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    className={inputClass}
+                    placeholder="Acme Inc."
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-fd-gray-light mb-1.5"
+                  >
+                    Phone{" "}
+                    <span className="text-fd-gray text-xs">(optional)</span>
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className={inputClass}
+                    placeholder="+1 (555) 000-0000"
                   />
                 </div>
 
@@ -110,7 +177,7 @@ export default function SignupPage() {
                     value={whatBuilding}
                     onChange={(e) => setWhatBuilding(e.target.value)}
                     rows={3}
-                    className="w-full rounded-lg border border-fd-border bg-fd-surface px-4 py-3 text-sm text-white placeholder:text-fd-gray/50 focus:outline-none focus:border-fd-orange/50 transition-colors resize-none"
+                    className={`${inputClass} resize-none`}
                     placeholder="A SaaS for..."
                   />
                 </div>
