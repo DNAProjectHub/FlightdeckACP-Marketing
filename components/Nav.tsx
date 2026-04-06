@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function Nav() {
@@ -21,13 +22,15 @@ export default function Nav() {
       }`}
     >
       <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-1 group">
-          <span className="text-xl font-bold text-fd-orange tracking-tight">
-            Flight
-          </span>
-          <span className="text-xl font-semibold text-fd-gray-light tracking-tight">
-            Deck
-          </span>
+        <Link href="/" className="block">
+          <Image
+            src="/images/logo.png"
+            alt="FlightDeck"
+            width={160}
+            height={58}
+            priority
+            className="h-8 w-auto"
+          />
         </Link>
 
         <Link

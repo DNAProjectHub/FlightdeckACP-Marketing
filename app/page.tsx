@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import ProofStrip from "@/components/ProofStrip";
+import DevModeCallout from "@/components/DevModeCallout";
 import Problem from "@/components/Problem";
 import SystemScroll from "@/components/SystemScroll";
 import ProductSurfaces from "@/components/ProductSurfaces";
@@ -15,6 +16,7 @@ export default function Home() {
       <main>
         <Hero />
         <ProofStrip />
+        <DevModeCallout />
         <Problem />
         <SystemScroll />
         <ProductSurfaces />
