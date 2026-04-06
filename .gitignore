@@ -125,6 +125,10 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
+# Large source assets — do not commit
+Docs/Assets/FD Notebook Assets/
+.DS_Store
+
 # yarn v3
 .pnp.*
 .yarn/*
