@@ -1,4 +1,7 @@
+"use client";
+
 import ScreenshotFrame from "./ScreenshotFrame";
+import ScrollReveal from "./ScrollReveal";
 
 const phases = [
   {
@@ -32,6 +35,7 @@ export default function FlightSchool() {
     <section className="py-24 border-t border-fd-border">
       <div className="mx-auto max-w-6xl px-6">
         {/* Intro with welcome screenshot */}
+        <ScrollReveal>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="text-xs font-semibold tracking-widest text-fd-orange uppercase">
@@ -61,8 +65,10 @@ export default function FlightSchool() {
             caption="Flight School walks you through three phases"
           />
         </div>
+        </ScrollReveal>
 
         {/* Three equal phase cards */}
+        <ScrollReveal delay={0.1}>
         <div className="mt-20 grid md:grid-cols-3 gap-6">
           {phases.map((phase) => (
             <div
@@ -88,8 +94,10 @@ export default function FlightSchool() {
             </div>
           ))}
         </div>
+        </ScrollReveal>
 
         {/* Flight Mode / Dev Mode callout */}
+        <ScrollReveal delay={0.1}>
         <div className="mt-24 rounded-xl border border-fd-border bg-fd-surface p-8 sm:p-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -110,6 +118,7 @@ export default function FlightSchool() {
             />
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );
