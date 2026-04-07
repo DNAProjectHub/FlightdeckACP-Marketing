@@ -34,12 +34,13 @@ export default function ScreenshotFrame({
           <Image
             src={src}
             alt={alt}
-            width={1920}
-            height={1080}
-            quality={75}
+            width={1280}
+            height={720}
+            quality={70}
             priority={priority}
             loading={priority ? "eager" : "lazy"}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1024px"
+            fetchPriority={priority ? "high" : "low"}
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 640px"
             className="w-full h-auto"
           />
           {/* Mask version number in top-right corner */}

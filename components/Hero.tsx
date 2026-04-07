@@ -51,9 +51,7 @@ export default function Hero() {
       </div>
 
       {/* ProofStrip pinned at the bottom of the hero viewport */}
-      <div className="mt-1">
-        <ProofStrip />
-      </div>
+      <ProofStrip />
     </section>
   );
 }

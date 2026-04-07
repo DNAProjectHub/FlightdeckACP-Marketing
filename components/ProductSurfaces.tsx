@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import ScreenshotFrame from "./ScreenshotFrame";
 import ScrollReveal from "./ScrollReveal";
 import SectionLabel from "./SectionLabel";
@@ -115,13 +115,40 @@ const regions: SurfaceRegion[] = [
   },
 ];
 
+const DURATION = 4500;
+
 function Region({ region }: { region: SurfaceRegion }) {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const count = region.tabs.length;
+
+  const advance = useCallback(() => {
+    setActive(a => (a + 1) % count);
+  }, [count]);
+
+  useEffect(() => {
+    if (paused) return;
+    timerRef.current = setTimeout(advance, DURATION);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [active, paused, advance]);
+
+  const handleTabClick = (i: number) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setActive(i);
+  };
+
   const tab = region.tabs[active];
 
   return (
     <ScrollReveal>
-      <div className="border-t border-fd-border py-24">
+      <div
+        className="border-t border-fd-border py-24"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
         <div className="mx-auto max-w-6xl px-6">
           <SectionLabel number={region.number} label={region.label} />
 
@@ -134,12 +161,12 @@ function Region({ region }: { region: SurfaceRegion }) {
             </p>
           </div>
 
-          {/* Big dominant screenshot */}
+          {/* Screenshots — fade between tabs */}
           <div className="mt-12 relative">
             {region.tabs.map((t, i) => (
               <div
                 key={t.number}
-                className={`transition-opacity duration-500 ${
+                className={`transition-opacity duration-700 ${
                   i === active
                     ? "opacity-100 relative"
                     : "opacity-0 absolute inset-0 pointer-events-none"
@@ -154,23 +181,43 @@ function Region({ region }: { region: SurfaceRegion }) {
             </div>
           </div>
 
-          {/* Body copy for active tab */}
-          <p className="mt-8 max-w-2xl text-base text-fd-gray-light leading-relaxed">
-            {tab.body}
-          </p>
+          {/* Body copy — fade with tab */}
+          <div className="mt-8 max-w-2xl relative min-h-[3rem]">
+            {region.tabs.map((t, i) => (
+              <p
+                key={t.number}
+                className={`text-base text-fd-gray-light leading-relaxed transition-opacity duration-500 ${
+                  i === active
+                    ? "opacity-100 relative"
+                    : "opacity-0 absolute inset-0 pointer-events-none"
+                }`}
+              >
+                {t.body}
+              </p>
+            ))}
+          </div>
 
-          {/* Sub-tabs */}
-          <div className="mt-10 flex flex-wrap gap-2">
+          {/* Pills with progress bar */}
+          <div className="mt-10 flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6">
             {region.tabs.map((t, i) => (
               <button
                 key={t.number}
-                onClick={() => setActive(i)}
-                className={`group flex items-baseline gap-2 rounded-md border px-4 py-2 text-sm transition-all ${
+                onClick={() => handleTabClick(i)}
+                className={`shrink-0 group relative overflow-hidden flex items-baseline gap-2 rounded-md border px-4 py-2 text-sm transition-all ${
                   i === active
                     ? "border-fd-orange/40 bg-fd-orange/5 text-white"
                     : "border-fd-border bg-fd-surface text-fd-gray hover:border-fd-orange/20 hover:text-fd-gray-light"
                 }`}
               >
+                {i === active && !paused && (
+                  <span
+                    key={active}
+                    className="absolute bottom-0 left-0 h-[2px] bg-fd-orange/60 rounded-full"
+                    style={{
+                      animation: `pill-progress ${DURATION}ms linear forwards`,
+                    }}
+                  />
+                )}
                 <span
                   className={`font-mono text-xs ${
                     i === active ? "text-fd-orange" : "text-fd-gray/50"
