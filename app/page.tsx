@@ -5,7 +5,6 @@ import DevModeCallout from "@/components/DevModeCallout";
 import ProductSurfaces from "@/components/ProductSurfaces";
 import FlightSchool from "@/components/FlightSchool";
 import FinalCTA from "@/components/FinalCTA";
-import StickyFooterCTA from "@/components/StickyFooterCTA";
 
 export default function Home() {
   return (
@@ -19,7 +18,6 @@ export default function Home() {
         <FlightSchool />
         <FinalCTA />
       </main>
-      <StickyFooterCTA />
     </>
   );
 }
