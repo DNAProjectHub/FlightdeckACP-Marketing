@@ -7,7 +7,7 @@ import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
   return (
-    <section className="relative h-screen min-h-[600px] flex flex-col pt-12 pb-4 overflow-hidden">
+    <section className="relative h-screen min-h-[600px] flex flex-col pt-4 pb-4 overflow-hidden">
       {/* Subtle ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-fd-orange/5 rounded-full blur-[160px] pointer-events-none" />
 
@@ -24,7 +24,7 @@ export default function Hero() {
             width={551}
             height={199}
             priority
-            className="h-9 sm:h-11 w-auto mb-5"
+            className="h-14 sm:h-20 w-auto mb-6"
           />
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]">
