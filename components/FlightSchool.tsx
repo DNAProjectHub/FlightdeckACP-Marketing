@@ -8,24 +8,27 @@ import FigLabel from "./FigLabel";
 const phases = [
   {
     number: "4.1",
-    name: "Style and Tone",
-    desc: "How proactive or restrained your copilot should be. Empathy, pacing, explanation style.",
-    image: "/images/screenshots/6_03_45_PM.webp",
-    alt: "Flight School Phase 1 — role selection: Founder/CEO, CTO, Solo Developer, PM",
+    name: "Co-Pilot Briefing",
+    tagline: "How your co-pilot communicates, decides, and operates.",
+    desc: "Complete the intake to configure your governance doctrine, set your experience level, and unlock the full FlightDeck workflow.",
+    image: "/images/screenshots/6_03_17_PM.webp",
+    alt: "Co-Pilot Briefing — Welcome to Flight School with three configuration phases",
   },
   {
     number: "4.2",
-    name: "Rules and Boundaries",
-    desc: "What your AI can and can't do without your approval. Protected systems. Evidence standards.",
+    name: "Mission Control",
+    tagline: "Define your project, configure infrastructure, and bind services.",
+    desc: "Create a new project with governance settings, provider bindings, and crew assignments pre-configured from your profile.",
     image: "/images/screenshots/6_03_31_PM.webp",
-    alt: "Flight School Phase 2 — Create a New Project with 6-step governance flow",
+    alt: "Mission Control — Create a New Project with 6-step governance flow",
   },
   {
     number: "4.3",
-    name: "Governance and Procedures",
-    desc: "Tool routing, project scope, output behavior, team shape.",
+    name: "Tactical Ops",
+    tagline: "Create reusable skills and workflow patterns.",
+    desc: "Build reusable skills that automate common workflows and execution patterns across your projects.",
     image: "/images/screenshots/6_04_04_PM.webp",
-    alt: "Flight School Phase 3 — Skill Building + Setup with AI-proposed structure",
+    alt: "Tactical Ops — Skill Building + Setup with AI-proposed structure",
   },
 ];
 
@@ -44,8 +47,8 @@ export default function FlightSchool() {
             <p className="text-base text-fd-gray leading-relaxed max-w-md">
               Before you touch a codebase, FlightDeck configures your AI
               copilot. Tell it how you work, what your product is, and how your
-              crew should behave. It generates CLAUDE.md, SOUL.md, and a full
-              governance stack. Nothing is saved until you review and approve.
+              crew should behave. Three modules. Nothing is saved until you
+              review and approve.
             </p>
           </div>
         </ScrollReveal>
@@ -58,14 +61,15 @@ export default function FlightSchool() {
                 key={phase.number}
                 className="rounded-xl border border-fd-border bg-fd-surface p-5 flex flex-col"
               >
-                <div className="flex items-baseline gap-3 mb-4">
+                <div className="flex items-baseline gap-3 mb-1">
                   <span className="font-mono text-xs text-fd-orange">
                     {phase.number}
                   </span>
-                  <h3 className="text-base font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-white">
                     {phase.name}
                   </h3>
                 </div>
+                <p className="text-xs text-fd-gray/70 mb-4">{phase.tagline}</p>
                 <ScreenshotFrame src={phase.image} alt={phase.alt} />
                 <div className="mt-3">
                   <FigLabel number={phase.number} />
