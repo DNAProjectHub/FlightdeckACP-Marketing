@@ -50,8 +50,8 @@ export default function DevModeCallout() {
           </div>
         </ScrollReveal>
 
-        <div className="mt-12 grid lg:grid-cols-2 gap-12 items-start">
-          {/* List with title + subtitle that swap */}
+        <div className="mt-12 grid lg:grid-cols-[280px_1fr] gap-8 items-start">
+          {/* Compact list with title + subtitle that swap */}
           <ScrollReveal direction="left">
             <div
               className="rounded-lg border border-fd-border bg-fd-surface overflow-hidden cursor-pointer select-none"
@@ -60,7 +60,7 @@ export default function DevModeCallout() {
               onClick={toggle}
             >
               {/* Toggle header */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-fd-border">
+              <div className="flex items-center justify-between px-3 py-2 border-b border-fd-border">
                 <div className="relative flex rounded-full bg-fd-black p-0.5">
                   <span
                     className={`absolute top-0.5 h-[calc(100%-4px)] w-[calc(50%-2px)] rounded-full transition-all duration-500 ease-in-out ${
@@ -70,22 +70,22 @@ export default function DevModeCallout() {
                     }`}
                   />
                   <span
-                    className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider uppercase transition-colors duration-500 ${
+                    className={`relative z-10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase transition-colors duration-500 ${
                       !devMode ? "text-fd-black" : "text-fd-gray"
                     }`}
                   >
                     Flight
                   </span>
                   <span
-                    className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider uppercase transition-colors duration-500 ${
+                    className={`relative z-10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase transition-colors duration-500 ${
                       devMode ? "text-white" : "text-fd-gray"
                     }`}
                   >
                     Dev
                   </span>
                 </div>
-                <span className="text-[10px] text-fd-gray/50 uppercase tracking-widest">
-                  {devMode ? "Developer Mode" : "Flight Mode"}
+                <span className="text-[9px] text-fd-gray/50 uppercase tracking-widest">
+                  {devMode ? "Dev Mode" : "Flight Mode"}
                 </span>
               </div>
 
@@ -96,16 +96,16 @@ export default function DevModeCallout() {
                 return (
                   <div
                     key={m.flight}
-                    className="px-4 py-3 border-b border-fd-border/50 last:border-0"
+                    className="px-3 py-1.5 border-b border-fd-border/50 last:border-0"
                   >
                     <div
                       className="transition-all duration-500"
                       style={{ transitionDelay: `${i * 40}ms` }}
                     >
-                      <div className="text-sm font-semibold text-white">
+                      <div className="text-xs font-semibold text-white leading-tight">
                         {title}
                       </div>
-                      <div className="text-xs text-fd-gray/60 mt-0.5">
+                      <div className="text-[10px] text-fd-gray/60 leading-tight mt-0.5">
                         {subtitle}
                       </div>
                     </div>
@@ -113,7 +113,7 @@ export default function DevModeCallout() {
                 );
               })}
             </div>
-            <p className="mt-3 text-xs text-fd-gray/50 text-center">
+            <p className="mt-2 text-[10px] text-fd-gray/40 text-center">
               hover to pause · click to toggle
             </p>
           </ScrollReveal>
