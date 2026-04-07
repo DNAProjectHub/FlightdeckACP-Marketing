@@ -7,7 +7,7 @@ import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen pt-20 pb-6 overflow-hidden">
+    <section className="relative pt-16 pb-6 overflow-hidden">
       {/* Subtle ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-fd-orange/5 rounded-full blur-[160px] pointer-events-none" />
 
@@ -39,8 +39,8 @@ export default function Hero() {
             software.
           </p>
 
-          {/* Hero screenshot */}
-          <div className="mt-5 w-full max-w-xl">
+          {/* Hero screenshot — bigger to fill viewport */}
+          <div className="mt-5 w-full max-w-3xl">
             <ScreenshotFrame
               src="/images/screenshots/6_01_33_PM.webp"
               alt="FlightDeck ATC — Air Traffic Control showing crew status and flight trajectories"
