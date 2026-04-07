@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 const tools = [
   {
     name: "GitHub",
@@ -48,10 +44,6 @@ const tools = [
     svg: `<path d="M12 1.85a1.42 1.42 0 00-.71.19L3.56 6.35A1.43 1.43 0 002.85 7.6v8.8c0 .52.27 1 .71 1.25l7.73 4.31c.44.24.98.24 1.42 0l7.73-4.31c.44-.25.71-.73.71-1.25V7.6c0-.52-.27-1-.71-1.25L12.71 2.04a1.42 1.42 0 00-.71-.19z"/>`,
   },
   {
-    name: "PostgreSQL",
-    svg: `<path d="M17.13 1.58c-1.52-.1-2.88.27-4.01.83-.37-.08-.78-.14-1.24-.14-1.48 0-2.73.49-3.65 1.29a5.4 5.4 0 00-2.13-.29c-2.44.2-4.28 1.78-4.5 4.12-.14 1.46.35 2.87 1.2 4.02-.24.8-.34 1.66-.27 2.55.23 2.81 1.96 4.86 4.4 5.55.5 1.48 1.42 2.7 2.68 3.35.62.32 1.35.46 2.1.39 1.02-.1 1.86-.57 2.46-1.23 1.04.2 2 .13 2.82-.18 1.35-.52 2.24-1.58 2.72-2.96.73-.06 1.4-.25 2-.58 1.68-.93 2.6-2.76 2.42-4.73a5.67 5.67 0 00-1.12-2.96c.25-.93.27-1.95.03-2.95-.48-2.03-2.1-3.67-3.91-3.95a6.44 6.44 0 00-2-.13z"/>`,
-  },
-  {
     name: "Tailwind",
     svg: `<path d="M12 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.3.74 1.91 1.35C13.43 10.88 14.6 12 17 12c2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.3-.74-1.91-1.35C15.57 7.12 14.4 6 12 6zM7 12c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.3.74 1.91 1.35C8.43 16.88 9.6 18 12 18c2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.3-.74-1.91-1.35C10.57 13.12 9.4 12 7 12z"/>`,
   },
@@ -65,53 +57,31 @@ const tools = [
   },
 ];
 
-const container = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.04,
-      delayChildren: 0.6,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 8 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function ProofStrip() {
   return (
-    <div className="w-full border-t border-fd-border/50 py-8">
-      <p className="text-center text-sm text-fd-gray/70 mb-6">
+    <div className="w-full">
+      <p className="text-center text-[11px] text-fd-gray/50 uppercase tracking-widest mb-3">
         Works with the stack you already use
       </p>
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="flex flex-wrap justify-center items-center gap-x-8 gap-y-5 max-w-3xl mx-auto px-6"
-      >
+      <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 max-w-4xl mx-auto px-4">
         {tools.map((tool) => (
-          <motion.div
+          <div
             key={tool.name}
-            variants={item}
-            className="group flex flex-col items-center gap-1.5"
+            className="group flex items-center gap-1.5 shrink-0"
+            title={tool.name}
           >
-            <div className="relative p-2.5 rounded-lg transition-all duration-300 group-hover:bg-fd-surface group-hover:shadow-[0_0_16px_rgba(249,115,22,0.08)]">
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-5 h-5 text-fd-gray/25 transition-colors duration-300 group-hover:text-fd-gray-light"
-                dangerouslySetInnerHTML={{ __html: tool.svg }}
-              />
-            </div>
-            <span className="text-[10px] text-fd-gray/40 transition-colors duration-300 group-hover:text-fd-gray">
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-4 h-4 text-fd-gray/30 transition-colors duration-300 group-hover:text-fd-gray-light"
+              dangerouslySetInnerHTML={{ __html: tool.svg }}
+            />
+            <span className="text-[10px] text-fd-gray/40 transition-colors duration-300 group-hover:text-fd-gray-light">
               {tool.name}
             </span>
-          </motion.div>
+          </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }

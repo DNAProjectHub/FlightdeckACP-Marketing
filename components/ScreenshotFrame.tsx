@@ -36,8 +36,10 @@ export default function ScreenshotFrame({
             alt={alt}
             width={1920}
             height={1080}
-            quality={90}
+            quality={75}
             priority={priority}
+            loading={priority ? "eager" : "lazy"}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1024px"
             className="w-full h-auto"
           />
           {/* Mask version number in top-right corner */}
@@ -66,9 +68,9 @@ export default function ScreenshotFrame({
             <Image
               src={src}
               alt={alt}
-              width={3840}
-              height={2160}
-              quality={95}
+              width={2400}
+              height={1350}
+              quality={90}
               className="w-auto h-auto max-w-full max-h-[90vh] rounded-lg"
             />
             {caption && (
