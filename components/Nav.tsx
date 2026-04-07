@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import pkg from "@/package.json";
 
@@ -22,11 +23,18 @@ export default function Nav() {
       }`}
     >
       <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-3">
-        <Link
-          href="/"
-          className="text-[11px] font-mono text-fd-gray/40 tracking-wider uppercase hover:text-fd-gray-light transition-colors"
-        >
-          v{pkg.version} beta
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/images/logo.png"
+            alt="FlightDeck"
+            width={160}
+            height={58}
+            priority
+            className="h-7 w-auto"
+          />
+          <span className="text-[10px] font-mono text-fd-gray/30 tracking-wider uppercase">
+            v{pkg.version} beta
+          </span>
         </Link>
         <Link
           href="/signup"
