@@ -39,18 +39,18 @@ export default function FlightSchool() {
   return (
     <section
       id="flightschool"
-      className="snap-section py-12 border-t border-fd-border"
+      className="snap-section py-8 border-t border-fd-border"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* Heading + intro paragraph */}
         <ScrollReveal>
           <div className="max-w-3xl">
             <SectionLabel number="4.0" label="Onboard" />
-            <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1] whitespace-nowrap">
+            <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-white tracking-tight leading-[1.1] whitespace-nowrap">
               Start with{" "}
               <span className="text-fd-gray/60">Flight School.</span>
             </h2>
-            <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-2xl">
+            <p className="mt-3 text-sm text-fd-gray leading-relaxed max-w-2xl">
               Before you touch a codebase, FlightDeck configures your AI
               copilot. Tell it how you work, what your product is, and how
               your crew should behave. Three modules. Nothing is saved until
@@ -61,7 +61,7 @@ export default function FlightSchool() {
 
         {/* Three-pills intro visual — moved below the paragraph */}
         <ScrollReveal delay={0.05}>
-          <div className="mt-8 max-w-4xl mx-auto">
+          <div className="mt-5 max-w-3xl mx-auto">
             <ScreenshotFrame
               src="/images/screenshots/threepills.webp"
               alt="Three Flight School modules — Co-Pilot Briefing, Mission Control, Tactical Ops"
@@ -71,7 +71,7 @@ export default function FlightSchool() {
 
         {/* Three smaller phase cards */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-8 grid md:grid-cols-3 gap-3 items-stretch max-w-5xl mx-auto">
+          <div className="mt-5 grid md:grid-cols-3 gap-3 items-stretch max-w-5xl mx-auto">
             {phases.map((phase) => (
               <div
                 key={phase.number}
