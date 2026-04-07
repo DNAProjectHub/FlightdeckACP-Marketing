@@ -51,12 +51,12 @@ export default function FlightSchool() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <div className="mt-16 relative">
+          <div className="mt-16 relative max-w-md mx-auto">
             <ScreenshotFrame
               src="/images/screenshots/6_03_17_PM.webp"
               alt="Welcome to Flight School — overview showing three phases"
             />
-            <div className="mt-3">
+            <div className="mt-3 text-center">
               <FigLabel number="4.0" />
             </div>
           </div>
