@@ -47,9 +47,8 @@ export default function FlightSchool() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <SectionLabel number="4.0" label="Onboard" />
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1]">
-                Start with
-                <br />
+              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1] whitespace-nowrap">
+                Start with{" "}
                 <span className="text-fd-gray/60">Flight School.</span>
               </h2>
               <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-lg">
