@@ -24,18 +24,8 @@ export default function Hero() {
             width={551}
             height={199}
             priority
-            className="h-9 sm:h-10 w-auto mb-4"
+            className="h-9 sm:h-10 w-auto mb-6"
           />
-
-          {/* Announcement chip */}
-          <Link
-            href="/signup"
-            className="inline-flex items-center gap-2 rounded-full border border-fd-border bg-fd-surface/60 backdrop-blur-sm px-3 py-1 text-[11px] text-fd-gray-light hover:border-fd-orange/30 hover:bg-fd-surface transition-all mb-5"
-          >
-            <span className="flex h-1.5 w-1.5 rounded-full bg-fd-orange" />
-            <span>Early access is open</span>
-            <span className="text-fd-gray/50">→</span>
-          </Link>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]">
             Plan the Work.{" "}
@@ -43,8 +33,9 @@ export default function Hero() {
           </h1>
 
           <p className="mt-4 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-relaxed">
-            The Control Plane for AI Work. Coordinate agents, govern execution,
-            and ship real software — as a system, not a series of conversations.
+            FlightDeck is the Control Plane for AI Work. Coordinate agents,
+            govern execution, and ship real software — as a system, not a
+            series of conversations.
           </p>
 
           <Link
