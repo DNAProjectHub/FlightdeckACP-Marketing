@@ -7,11 +7,11 @@ import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
   return (
-    <section className="relative h-screen min-h-[600px] flex flex-col pt-4 pb-4 overflow-hidden">
+    <section className="relative pt-20 pb-6 overflow-hidden">
       {/* Subtle ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-fd-orange/5 rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="flex-1 mx-auto max-w-5xl px-6 w-full text-center flex flex-col items-center justify-center">
+      <div className="mx-auto max-w-5xl px-6 w-full text-center">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ export default function Hero() {
             software.
           </p>
 
-          {/* Hero screenshot — smaller so proof strip fits cleanly above fold */}
+          {/* Hero screenshot */}
           <div className="mt-5 w-full max-w-xl">
             <ScreenshotFrame
               src="/images/screenshots/6_01_33_PM.webp"
@@ -50,8 +50,10 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ProofStrip pinned at the bottom of the hero viewport */}
-      <ProofStrip />
+      {/* ProofStrip — natural flow, right under the screenshot */}
+      <div className="mt-6">
+        <ProofStrip />
+      </div>
     </section>
   );
 }
