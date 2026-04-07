@@ -44,14 +44,14 @@ export default function FlightSchool() {
       <div className="mx-auto max-w-6xl px-6">
         {/* Heading + three-pills intro visual side by side */}
         <ScrollReveal>
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 items-center">
             <div>
               <SectionLabel number="4.0" label="Onboard" />
               <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1] whitespace-nowrap">
                 Start with{" "}
                 <span className="text-fd-gray/60">Flight School.</span>
               </h2>
-              <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-lg">
+              <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-md">
                 Before you touch a codebase, FlightDeck configures your AI
                 copilot. Tell it how you work, what your product is, and how
                 your crew should behave. Three modules. Nothing is saved until
@@ -70,33 +70,33 @@ export default function FlightSchool() {
           </div>
         </ScrollReveal>
 
-        {/* Three equal phase cards */}
+        {/* Three smaller phase cards */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-10 grid md:grid-cols-3 gap-4 items-stretch">
+          <div className="mt-8 grid md:grid-cols-3 gap-3 items-stretch max-w-5xl mx-auto">
             {phases.map((phase) => (
               <div
                 key={phase.number}
-                className="rounded-xl border border-fd-border bg-fd-surface p-4 flex flex-col"
+                className="rounded-lg border border-fd-border bg-fd-surface p-3 flex flex-col"
               >
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-mono text-xs text-fd-orange">
+                  <span className="font-mono text-[10px] text-fd-orange">
                     {phase.number}
                   </span>
-                  <h3 className="text-base font-semibold text-white">
+                  <h3 className="text-sm font-semibold text-white">
                     {phase.flightName}
                   </h3>
-                  <span className="text-[9px] font-mono text-fd-purple/60 uppercase tracking-wider ml-auto">
+                  <span className="text-[8px] font-mono text-fd-purple/60 uppercase tracking-wider ml-auto">
                     {phase.devName}
                   </span>
                 </div>
-                <p className="text-[11px] text-fd-gray/70 mb-3">
+                <p className="text-[10px] text-fd-gray/70 mb-2 leading-snug">
                   {phase.tagline}
                 </p>
                 <ScreenshotFrame src={phase.image} alt={phase.alt} />
                 <div className="mt-2">
                   <FigLabel number={phase.number} />
                 </div>
-                <p className="mt-3 text-xs text-fd-gray leading-relaxed">
+                <p className="mt-2 text-[11px] text-fd-gray leading-relaxed">
                   {phase.desc}
                 </p>
               </div>
