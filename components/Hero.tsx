@@ -24,7 +24,7 @@ export default function Hero() {
             width={551}
             height={199}
             priority
-            className="h-14 sm:h-20 w-auto mb-6"
+            className="h-12 sm:h-16 w-auto mb-4"
           />
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.05] whitespace-nowrap">
@@ -32,15 +32,15 @@ export default function Hero() {
             <span className="text-fd-gray/60">Ship the Plan.</span>
           </h1>
 
-          <p className="mt-4 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-relaxed">
             FlightDeck is the Control Plane for AI software development.
             Coordinate agents, govern execution, and ship real software as a
             system, not a conversation. Turn business plans into business
             software.
           </p>
 
-          {/* Hero screenshot — constrained */}
-          <div className="mt-8 w-full max-w-2xl">
+          {/* Hero screenshot — smaller so proof strip fits cleanly above fold */}
+          <div className="mt-5 w-full max-w-xl">
             <ScreenshotFrame
               src="/images/screenshots/6_01_33_PM.webp"
               alt="FlightDeck ATC — Air Traffic Control showing crew status and flight trajectories"
