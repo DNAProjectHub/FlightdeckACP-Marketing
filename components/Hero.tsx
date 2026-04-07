@@ -27,16 +27,16 @@ export default function Hero() {
             className="h-14 sm:h-20 w-auto mb-6"
           />
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]">
-            Plan the Work.
-            <br />
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.05] whitespace-nowrap">
+            Plan the Work.{" "}
             <span className="text-fd-gray/60">Ship the Plan.</span>
           </h1>
 
-          <p className="mt-4 text-sm sm:text-base text-fd-gray max-w-xl mx-auto leading-relaxed">
-            FlightDeck is the Control Plane for AI Work. Coordinate agents,
-            govern execution, and ship real software — as a system, not a
-            series of conversations.
+          <p className="mt-4 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-relaxed">
+            FlightDeck is the Control Plane for AI software development.
+            Coordinate agents, govern execution, and ship real software as a
+            system, not the scattered result of random conversations. Turn
+            business plans into business software.
           </p>
 
           {/* Hero screenshot — constrained */}
