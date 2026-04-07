@@ -40,7 +40,7 @@ export default function Hero() {
           </p>
 
           {/* Hero screenshot — constrained */}
-          <div className="mt-5 w-full max-w-2xl">
+          <div className="mt-10 w-full max-w-2xl">
             <ScreenshotFrame
               src="/images/screenshots/6_01_33_PM.webp"
               alt="FlightDeck ATC — Air Traffic Control showing crew status and flight trajectories"
@@ -51,7 +51,7 @@ export default function Hero() {
       </div>
 
       {/* ProofStrip pinned at the bottom of the hero viewport */}
-      <div className="mt-4">
+      <div className="mt-1">
         <ProofStrip />
       </div>
     </section>
