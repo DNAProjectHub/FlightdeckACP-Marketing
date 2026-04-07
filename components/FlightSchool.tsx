@@ -8,15 +8,17 @@ import FigLabel from "./FigLabel";
 const phases = [
   {
     number: "4.1",
-    name: "Co-Pilot Briefing",
+    flightName: "Co-Pilot Briefing",
+    devName: "Governance",
     tagline: "How your co-pilot communicates, decides, and operates.",
     desc: "Complete the intake to configure your governance doctrine, set your experience level, and unlock the full FlightDeck workflow.",
-    image: "/images/screenshots/6_03_17_PM.webp",
-    alt: "Co-Pilot Briefing — Welcome to Flight School with three configuration phases",
+    image: "/images/screenshots/6_03_45_PM.webp",
+    alt: "Co-Pilot Briefing — role selection and co-pilot configuration",
   },
   {
     number: "4.2",
-    name: "Mission Control",
+    flightName: "Mission Control",
+    devName: "Projects",
     tagline: "Define your project, configure infrastructure, and bind services.",
     desc: "Create a new project with governance settings, provider bindings, and crew assignments pre-configured from your profile.",
     image: "/images/screenshots/6_03_31_PM.webp",
@@ -24,7 +26,8 @@ const phases = [
   },
   {
     number: "4.3",
-    name: "Tactical Ops",
+    flightName: "Tactical Ops",
+    devName: "Skills",
     tagline: "Create reusable skills and workflow patterns.",
     desc: "Build reusable skills that automate common workflows and execution patterns across your projects.",
     image: "/images/screenshots/6_04_04_PM.webp",
@@ -53,9 +56,22 @@ export default function FlightSchool() {
           </div>
         </ScrollReveal>
 
-        {/* Three equal phase cards */}
+        {/* Intro screenshot showing all three modules together */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-16 grid md:grid-cols-3 gap-6 items-stretch">
+          <div className="mt-12 max-w-md mx-auto">
+            <ScreenshotFrame
+              src="/images/screenshots/6_03_17_PM.webp"
+              alt="Welcome to Flight School — overview showing the three modules"
+            />
+            <div className="mt-3 text-center">
+              <FigLabel number="4.0" />
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Three equal phase cards */}
+        <ScrollReveal delay={0.15}>
+          <div className="mt-12 grid md:grid-cols-3 gap-6 items-stretch">
             {phases.map((phase) => (
               <div
                 key={phase.number}
@@ -66,8 +82,11 @@ export default function FlightSchool() {
                     {phase.number}
                   </span>
                   <h3 className="text-lg font-semibold text-white">
-                    {phase.name}
+                    {phase.flightName}
                   </h3>
+                  <span className="text-[10px] font-mono text-fd-purple/60 uppercase tracking-wider ml-auto">
+                    {phase.devName}
+                  </span>
                 </div>
                 <p className="text-xs text-fd-gray/70 mb-4">{phase.tagline}</p>
                 <ScreenshotFrame src={phase.image} alt={phase.alt} />
