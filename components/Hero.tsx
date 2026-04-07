@@ -7,7 +7,7 @@ import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
   return (
-    <section className="relative pt-20 pb-6 overflow-hidden">
+    <section className="relative min-h-screen pt-20 pb-6 overflow-hidden">
       {/* Subtle ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-fd-orange/5 rounded-full blur-[160px] pointer-events-none" />
 
