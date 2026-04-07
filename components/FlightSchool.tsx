@@ -12,8 +12,8 @@ const phases = [
     devName: "Governance",
     tagline: "How your co-pilot communicates, decides, and operates.",
     desc: "Complete the intake to configure your governance doctrine, set your experience level, and unlock the full FlightDeck workflow.",
-    image: "/images/screenshots/6_03_45_PM.webp",
-    alt: "Co-Pilot Briefing — role selection and co-pilot configuration",
+    image: "/images/screenshots/6_03_17_PM.webp",
+    alt: "Co-Pilot Briefing — Welcome to Flight School with three configuration phases",
   },
   {
     number: "4.2",
@@ -42,32 +42,20 @@ export default function FlightSchool() {
       className="snap-section py-12 border-t border-fd-border"
     >
       <div className="mx-auto max-w-6xl px-6">
-        {/* Heading + welcome screenshot side by side */}
+        {/* Heading + intro */}
         <ScrollReveal>
-          <div className="grid lg:grid-cols-[1fr_280px] gap-12 items-center">
-            <div>
-              <SectionLabel number="4.0" label="Onboard" />
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1]">
-                Start with
-                <br />
-                <span className="text-fd-gray/60">Flight School.</span>
-              </h2>
-              <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-lg">
-                Before you touch a codebase, FlightDeck configures your AI
-                copilot. Tell it how you work, what your product is, and how
-                your crew should behave. Three modules. Nothing is saved until
-                you review and approve.
-              </p>
-            </div>
-            <div>
-              <ScreenshotFrame
-                src="/images/screenshots/6_03_17_PM.webp"
-                alt="Welcome to Flight School — overview showing the three modules"
-              />
-              <div className="mt-2 text-center">
-                <FigLabel number="4.0" />
-              </div>
-            </div>
+          <div className="max-w-3xl">
+            <SectionLabel number="4.0" label="Onboard" />
+            <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1]">
+              Start with{" "}
+              <span className="text-fd-gray/60">Flight School.</span>
+            </h2>
+            <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-2xl">
+              Before you touch a codebase, FlightDeck configures your AI
+              copilot. Tell it how you work, what your product is, and how
+              your crew should behave. Three modules. Nothing is saved until
+              you review and approve.
+            </p>
           </div>
         </ScrollReveal>
 
