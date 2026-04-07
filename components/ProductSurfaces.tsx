@@ -145,24 +145,24 @@ function Region({ region }: { region: SurfaceRegion }) {
   return (
     <ScrollReveal>
       <div
-        className="snap-section border-t border-fd-border py-16"
+        className="snap-section border-t border-fd-border py-12"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
         <div className="mx-auto max-w-6xl px-6">
           <SectionLabel number={region.number} label={region.label} />
 
-          <div className="mt-6 grid lg:grid-cols-2 gap-12 items-end">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1]">
+          <div className="mt-4 grid lg:grid-cols-2 gap-8 items-end">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1]">
               {region.heading}
             </h2>
-            <p className="text-base text-fd-gray leading-relaxed max-w-md">
+            <p className="text-sm text-fd-gray leading-relaxed max-w-md">
               {region.intro}
             </p>
           </div>
 
-          {/* Screenshots — fade between tabs */}
-          <div className="mt-12 relative">
+          {/* Screenshots — fade between tabs, constrained */}
+          <div className="mt-6 relative max-w-3xl mx-auto">
             {region.tabs.map((t, i) => (
               <div
                 key={t.number}
@@ -175,18 +175,18 @@ function Region({ region }: { region: SurfaceRegion }) {
                 <ScreenshotFrame src={t.image} alt={t.alt} />
               </div>
             ))}
-            <div className="mt-3 flex items-center justify-between">
+            <div className="mt-2 flex items-center justify-between">
               <FigLabel number={tab.number} />
               <span className="text-xs text-fd-gray/50">{tab.name}</span>
             </div>
           </div>
 
           {/* Body copy — fade with tab */}
-          <div className="mt-8 max-w-2xl relative min-h-[3rem]">
+          <div className="mt-4 max-w-2xl mx-auto text-center relative min-h-[2.5rem]">
             {region.tabs.map((t, i) => (
               <p
                 key={t.number}
-                className={`text-base text-fd-gray-light leading-relaxed transition-opacity duration-500 ${
+                className={`text-sm text-fd-gray-light leading-relaxed transition-opacity duration-500 ${
                   i === active
                     ? "opacity-100 relative"
                     : "opacity-0 absolute inset-0 pointer-events-none"
@@ -198,7 +198,7 @@ function Region({ region }: { region: SurfaceRegion }) {
           </div>
 
           {/* Pills with progress bar */}
-          <div className="mt-10 flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6">
+          <div className="mt-6 flex justify-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6">
             {region.tabs.map((t, i) => (
               <button
                 key={t.number}
