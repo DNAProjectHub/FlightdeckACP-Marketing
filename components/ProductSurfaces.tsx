@@ -17,7 +17,8 @@ interface SubTab {
 interface SurfaceRegion {
   number: string;
   label: string;
-  heading: string;
+  headingLine1: string;
+  headingLine2: string;
   intro: string;
   tabs: SubTab[];
 }
@@ -26,7 +27,8 @@ const regions: SurfaceRegion[] = [
   {
     number: "1.0",
     label: "Plan",
-    heading: "Turn ideas into governed specs.",
+    headingLine1: "Turn ideas into",
+    headingLine2: "governed specs.",
     intro:
       "Every plan, spec, wireframe, and asset — classified, health-checked, and linked to the work it drives. Specs become work items through a structured process. Truth chains: every task traces to its source.",
     tabs: [
@@ -56,7 +58,8 @@ const regions: SurfaceRegion[] = [
   {
     number: "2.0",
     label: "Execute",
-    heading: "Coordinate the crew.",
+    headingLine1: "Coordinate",
+    headingLine2: "the crew.",
     intro:
       "Your command deck. ATC narrates current state. The crew has defined roles, fuel gauges, and full comms logs. You manage a team, not a chatbox.",
     tabs: [
@@ -86,7 +89,8 @@ const regions: SurfaceRegion[] = [
   {
     number: "3.0",
     label: "Govern",
-    heading: "Receipts for everything.",
+    headingLine1: "Receipts for",
+    headingLine2: "everything.",
     intro:
       "Session history, decisions, commits, and receipts. Diagnostics, secrets, and system health. Schema explorer for the data structures underneath.",
     tabs: [
@@ -153,8 +157,10 @@ function Region({ region }: { region: SurfaceRegion }) {
           <SectionLabel number={region.number} label={region.label} />
 
           <div className="mt-4 grid lg:grid-cols-2 gap-8 items-end">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1]">
-              {region.heading}
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">
+              {region.headingLine1}
+              <br />
+              <span className="text-fd-gray/60">{region.headingLine2}</span>
             </h2>
             <p className="text-sm text-fd-gray leading-relaxed max-w-md">
               {region.intro}
