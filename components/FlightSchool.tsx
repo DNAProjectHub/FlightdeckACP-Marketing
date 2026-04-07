@@ -42,31 +42,30 @@ export default function FlightSchool() {
       className="snap-section py-12 border-t border-fd-border"
     >
       <div className="mx-auto max-w-6xl px-6">
-        {/* Heading + three-pills intro visual side by side */}
+        {/* Heading + intro paragraph */}
         <ScrollReveal>
-          <div className="grid lg:grid-cols-[1fr_1.6fr] gap-10 items-center">
-            <div>
-              <SectionLabel number="4.0" label="Onboard" />
-              <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1] whitespace-nowrap">
-                Start with{" "}
-                <span className="text-fd-gray/60">Flight School.</span>
-              </h2>
-              <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-md">
-                Before you touch a codebase, FlightDeck configures your AI
-                copilot. Tell it how you work, what your product is, and how
-                your crew should behave. Three modules. Nothing is saved until
-                you review and approve.
-              </p>
-            </div>
-            <div>
-              <ScreenshotFrame
-                src="/images/screenshots/threepills.webp"
-                alt="Three Flight School modules — Co-Pilot Briefing, Mission Control, Tactical Ops"
-              />
-              <div className="mt-2">
-                <FigLabel number="4.0" />
-              </div>
-            </div>
+          <div className="max-w-3xl">
+            <SectionLabel number="4.0" label="Onboard" />
+            <h2 className="mt-4 text-3xl sm:text-4xl font-bold text-white tracking-tight leading-[1.1] whitespace-nowrap">
+              Start with{" "}
+              <span className="text-fd-gray/60">Flight School.</span>
+            </h2>
+            <p className="mt-4 text-sm text-fd-gray leading-relaxed max-w-2xl">
+              Before you touch a codebase, FlightDeck configures your AI
+              copilot. Tell it how you work, what your product is, and how
+              your crew should behave. Three modules. Nothing is saved until
+              you review and approve.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Three-pills intro visual — moved below the paragraph */}
+        <ScrollReveal delay={0.05}>
+          <div className="mt-8 max-w-4xl mx-auto">
+            <ScreenshotFrame
+              src="/images/screenshots/threepills.webp"
+              alt="Three Flight School modules — Co-Pilot Briefing, Mission Control, Tactical Ops"
+            />
           </div>
         </ScrollReveal>
 
