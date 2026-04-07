@@ -1,10 +1,10 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import DevModeCallout from "@/components/DevModeCallout";
 import Problem from "@/components/Problem";
-import SystemScroll from "@/components/SystemScroll";
+import DevModeCallout from "@/components/DevModeCallout";
 import ProductSurfaces from "@/components/ProductSurfaces";
 import FlightSchool from "@/components/FlightSchool";
+import ProofStrip from "@/components/ProofStrip";
 import FinalCTA from "@/components/FinalCTA";
 import StickyFooterCTA from "@/components/StickyFooterCTA";
 
@@ -14,11 +14,11 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <DevModeCallout />
         <Problem />
-        <SystemScroll />
+        <DevModeCallout />
         <ProductSurfaces />
         <FlightSchool />
+        <ProofStrip />
         <FinalCTA />
       </main>
       <StickyFooterCTA />

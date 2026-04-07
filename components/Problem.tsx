@@ -2,14 +2,21 @@
 
 import ScrollReveal from "./ScrollReveal";
 import ScreenshotFrame from "./ScreenshotFrame";
+import SectionLabel from "./SectionLabel";
+import FigLabel from "./FigLabel";
 
 export default function Problem() {
   return (
-    <section id="problem" className="py-24">
+    <section id="problem" className="py-24 border-t border-fd-border">
       <ScrollReveal>
-        <div className="mx-auto max-w-[680px] px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            AI can build anything. The problem is controlling it.
+        <div className="mx-auto max-w-3xl px-6">
+          <SectionLabel number="0.1" label="The Problem" />
+          <h2 className="mt-6 text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1]">
+            AI can build anything.
+            <br />
+            <span className="text-fd-gray/60">
+              The problem is controlling it.
+            </span>
           </h2>
 
           <div className="mt-10 space-y-6 text-base text-fd-gray leading-relaxed">
@@ -34,18 +41,18 @@ export default function Problem() {
         </div>
       </ScrollReveal>
 
-      {/* Caution Callout — single column, inline with the flow */}
       <ScrollReveal delay={0.15}>
-        <div className="mx-auto max-w-[680px] px-6 mt-16">
+        <div className="mx-auto max-w-3xl px-6 mt-16">
           <div className="rounded-xl border border-fd-yellow/20 bg-fd-surface p-6">
-            <span className="inline-block text-xs font-semibold tracking-widest text-fd-yellow uppercase mb-3">
-              No Silent Failures
-            </span>
+            <SectionLabel number="0.2" label="No Silent Failures" className="mb-4" />
             <ScreenshotFrame
               src="/images/screenshots/6_01_42_PM.webp"
               alt="FlightDeck Cockpit showing warning caution row"
             />
-            <blockquote className="mt-4 text-base text-fd-gray-light italic border-l-2 border-fd-yellow/40 pl-4">
+            <div className="mt-3">
+              <FigLabel number="0.2" />
+            </div>
+            <blockquote className="mt-5 text-base text-fd-gray-light italic border-l-2 border-fd-yellow/40 pl-4">
               &ldquo;Claude Code context at 88% — recommend refuel.&rdquo;
             </blockquote>
             <p className="mt-3 text-sm text-fd-gray leading-relaxed">

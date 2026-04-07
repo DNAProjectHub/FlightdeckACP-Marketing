@@ -1,226 +1,199 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import ScreenshotFrame from "./ScreenshotFrame";
+import ScrollReveal from "./ScrollReveal";
+import SectionLabel from "./SectionLabel";
+import FigLabel from "./FigLabel";
 
-const surfaces = [
+interface SubTab {
+  number: string;
+  name: string;
+  image: string;
+  alt: string;
+  body: string;
+}
+
+interface SurfaceRegion {
+  number: string;
+  label: string;
+  heading: string;
+  intro: string;
+  tabs: SubTab[];
+}
+
+const regions: SurfaceRegion[] = [
   {
-    name: "Cockpit",
-    image: "/images/screenshots/6_01_42_PM.webp",
-    alt: "FlightDeck Cockpit — command deck with ATC Readout and cautions",
-    copy: "Your command deck. ATC Readout narrates current project state. Cautions surface in plain language when your system needs a decision. Start Engines to begin preflight.",
+    number: "1.0",
+    label: "Plan",
+    heading: "Turn ideas into governed specs.",
+    intro:
+      "Every plan, spec, wireframe, and asset — classified, health-checked, and linked to the work it drives. Specs become work items through a structured process. Truth chains: every task traces to its source.",
+    tabs: [
+      {
+        number: "1.1",
+        name: "Document Manifest",
+        image: "/images/screenshots/6_02_04_PM.webp",
+        alt: "FlightDeck Document Manifest — classified documents with health checks",
+        body: "Every document classified, health-checked, and linked to the work it drives.",
+      },
+      {
+        number: "1.2",
+        name: "Flight Planning",
+        image: "/images/screenshots/6_02_17_PM.webp",
+        alt: "FlightDeck Flight Planning — specs to work items with truth chains",
+        body: "Specs become work items through a governed process. Every task traces to its source spec.",
+      },
+      {
+        number: "1.3",
+        name: "Ingest",
+        image: "/images/screenshots/6_03_01_PM.webp",
+        alt: "FlightDeck Ingest modal — AI classification with health badges",
+        body: "AI classifies new documents on intake. Confidence badges. Always reviewable.",
+      },
+    ],
   },
   {
-    name: "ATC",
-    image: "/images/screenshots/6_01_33_PM.webp",
-    alt: "FlightDeck ATC — portfolio command with crew fuel gauges",
-    copy: "Portfolio command. Session timer. All five crew members with fuel gauges. Multi-project flight trajectories with real ETAs. The full picture from one surface.",
+    number: "2.0",
+    label: "Execute",
+    heading: "Coordinate the crew.",
+    intro:
+      "Your command deck. ATC narrates current state. The crew has defined roles, fuel gauges, and full comms logs. You manage a team, not a chatbox.",
+    tabs: [
+      {
+        number: "2.1",
+        name: "Cockpit",
+        image: "/images/screenshots/6_01_42_PM.webp",
+        alt: "FlightDeck Cockpit — command deck with ATC Readout and cautions",
+        body: "Your command deck. ATC Readout narrates project state. Cautions surface in plain language when your system needs a decision.",
+      },
+      {
+        number: "2.2",
+        name: "ATC",
+        image: "/images/screenshots/6_01_33_PM.webp",
+        alt: "FlightDeck ATC — portfolio command with crew fuel gauges",
+        body: "Portfolio command. Session timer. Crew fuel gauges. Multi-project trajectories with real ETAs. The full picture from one surface.",
+      },
+      {
+        number: "2.3",
+        name: "Crew Manifest",
+        image: "/images/screenshots/6_01_45_PM.webp",
+        alt: "FlightDeck Crew Manifest — agent roles and fuel gauges",
+        body: "Danny is Pilot. ChatGPT is Architect. Claude is Reasoner. Claude Code is Implementer. Defined roles. Full comms logs.",
+      },
+    ],
   },
   {
-    name: "Crew Manifest",
-    image: "/images/screenshots/6_01_45_PM.webp",
-    alt: "FlightDeck Crew Manifest — agent roles and fuel gauges",
-    copy: "Danny is Pilot. ChatGPT is Architect. Claude is Reasoner. Claude Code is Implementer. Every agent has a defined role, a fuel gauge, and a full comms log. You manage a team, not a chatbox.",
-  },
-  {
-    name: "Documents",
-    image: "/images/screenshots/6_02_04_PM.webp",
-    alt: "FlightDeck Document Manifest — classified documents with health checks",
-    copy: "Every plan, spec, wireframe, and asset — classified, health-checked, and linked to the work it drives.",
-  },
-  {
-    name: "Flight Planning",
-    image: "/images/screenshots/6_02_17_PM.webp",
-    alt: "FlightDeck Flight Planning — specs to work items with truth chains",
-    copy: "Specs become work items through a governed process. Truth chains: every task traces to its source spec.",
-  },
-  {
-    name: "Flight Logs",
-    image: "/images/screenshots/6_02_21_PM.webp",
-    alt: "FlightDeck Flight Logs — session history and commit receipts",
-    copy: 'Session history, decisions, commits, and receipts. You never ask "what happened last Tuesday?" again.',
-  },
-  {
-    name: "Maintenance",
-    image: "/images/screenshots/6_01_55_PM.webp",
-    alt: "FlightDeck Maintenance — diagnostics and system health",
-    copy: "Diagnostics, provider bindings, secrets, system health. The hangar where the system services itself.",
-  },
-  {
-    name: "Schema Explorer",
-    image: "/images/screenshots/6_01_59_PM.webp",
-    alt: "FlightDeck Schema Explorer — schema explorer and query console",
-    copy: "Schema explorer and query console. Your system's data structure — visible and inspectable.",
+    number: "3.0",
+    label: "Govern",
+    heading: "Receipts for everything.",
+    intro:
+      "Session history, decisions, commits, and receipts. Diagnostics, secrets, and system health. Schema explorer for the data structures underneath.",
+    tabs: [
+      {
+        number: "3.1",
+        name: "Flight Logs",
+        image: "/images/screenshots/6_02_21_PM.webp",
+        alt: "FlightDeck Flight Logs — session history and commit receipts",
+        body: 'Session history, decisions, commits, and receipts. You never ask "what happened last Tuesday?" again.',
+      },
+      {
+        number: "3.2",
+        name: "Maintenance",
+        image: "/images/screenshots/6_01_55_PM.webp",
+        alt: "FlightDeck Maintenance — diagnostics and system health",
+        body: "Diagnostics, provider bindings, secrets, system health. The hangar where the system services itself.",
+      },
+      {
+        number: "3.3",
+        name: "Schema Explorer",
+        image: "/images/screenshots/6_01_59_PM.webp",
+        alt: "FlightDeck Schema Explorer — schema explorer and query console",
+        body: "Schema explorer and query console. Your system's data structure — visible and inspectable.",
+      },
+    ],
   },
 ];
 
-export default function ProductSurfaces() {
+function Region({ region }: { region: SurfaceRegion }) {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  const next = useCallback(
-    () => setActive((i) => (i + 1) % surfaces.length),
-    []
-  );
-
-  // Auto-cycle every 5s unless paused
-  useEffect(() => {
-    if (paused) return;
-    const id = setInterval(next, 5000);
-    return () => clearInterval(id);
-  }, [paused, next]);
+  const tab = region.tabs[active];
 
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Eight surfaces. One system.
-          </h2>
-          <p className="mt-4 text-base text-fd-gray max-w-xl mx-auto">
-            Every part of FlightDeck has a specific job. Nothing overlaps.
-            Nothing gets lost.
-          </p>
-        </div>
+    <ScrollReveal>
+      <div className="border-t border-fd-border py-24">
+        <div className="mx-auto max-w-6xl px-6">
+          <SectionLabel number={region.number} label={region.label} />
 
-        {/* Tab pills */}
-        <div
-          className="mt-12 flex flex-wrap justify-center gap-2"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          {surfaces.map((s, i) => (
-            <button
-              key={s.name}
-              onClick={() => {
-                setActive(i);
-                setPaused(true);
-              }}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                i === active
-                  ? "bg-fd-orange text-fd-black"
-                  : "bg-fd-surface border border-fd-border text-fd-gray hover:text-fd-gray-light hover:border-fd-orange/30"
-              }`}
-            >
-              {s.name}
-            </button>
-          ))}
-        </div>
+          <div className="mt-6 grid lg:grid-cols-2 gap-12 items-end">
+            <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1]">
+              {region.heading}
+            </h2>
+            <p className="text-base text-fd-gray leading-relaxed max-w-md">
+              {region.intro}
+            </p>
+          </div>
 
-        {/* Active surface display */}
-        <div
-          className="mt-10"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-        >
-          <div className="relative">
-            {surfaces.map((surface, i) => (
+          {/* Big dominant screenshot */}
+          <div className="mt-12 relative">
+            {region.tabs.map((t, i) => (
               <div
-                key={surface.name}
-                className={`transition-all duration-500 ${
+                key={t.number}
+                className={`transition-opacity duration-500 ${
                   i === active
                     ? "opacity-100 relative"
                     : "opacity-0 absolute inset-0 pointer-events-none"
                 }`}
               >
-                <div className="grid lg:grid-cols-[1fr_340px] gap-8 items-start">
-                  <ScreenshotFrame src={surface.image} alt={surface.alt} />
-                  <div className="flex flex-col justify-center">
-                    <h3 className="text-2xl font-bold text-white">
-                      {surface.name}
-                    </h3>
-                    <p className="mt-3 text-base text-fd-gray leading-relaxed">
-                      {surface.copy}
-                    </p>
-                    {/* Progress bar */}
-                    <div className="mt-6 flex gap-1.5">
-                      {surfaces.map((_, j) => (
-                        <div
-                          key={j}
-                          className="h-0.5 flex-1 rounded-full overflow-hidden bg-fd-border cursor-pointer"
-                          onClick={() => {
-                            setActive(j);
-                            setPaused(true);
-                          }}
-                        >
-                          <div
-                            className={`h-full rounded-full transition-all ${
-                              j === active
-                                ? "bg-fd-orange w-full"
-                                : j < active
-                                  ? "bg-fd-orange/30 w-full"
-                                  : "bg-transparent w-0"
-                            }`}
-                            style={
-                              j === active && !paused
-                                ? {
-                                    animation: "progress 5s linear",
-                                  }
-                                : undefined
-                            }
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                <ScreenshotFrame src={t.image} alt={t.alt} />
               </div>
+            ))}
+            <div className="mt-3 flex items-center justify-between">
+              <FigLabel number={tab.number} />
+              <span className="text-xs text-fd-gray/50">{tab.name}</span>
+            </div>
+          </div>
+
+          {/* Body copy for active tab */}
+          <p className="mt-8 max-w-2xl text-base text-fd-gray-light leading-relaxed">
+            {tab.body}
+          </p>
+
+          {/* Sub-tabs */}
+          <div className="mt-10 flex flex-wrap gap-2">
+            {region.tabs.map((t, i) => (
+              <button
+                key={t.number}
+                onClick={() => setActive(i)}
+                className={`group flex items-baseline gap-2 rounded-md border px-4 py-2 text-sm transition-all ${
+                  i === active
+                    ? "border-fd-orange/40 bg-fd-orange/5 text-white"
+                    : "border-fd-border bg-fd-surface text-fd-gray hover:border-fd-orange/20 hover:text-fd-gray-light"
+                }`}
+              >
+                <span
+                  className={`font-mono text-xs ${
+                    i === active ? "text-fd-orange" : "text-fd-gray/50"
+                  }`}
+                >
+                  {t.number}
+                </span>
+                <span className="font-medium">{t.name}</span>
+              </button>
             ))}
           </div>
         </div>
-
-        {/* Feature Callouts */}
-        <div className="mt-24 space-y-20">
-          {/* Document Health */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <ScreenshotFrame
-              src="/images/screenshots/6_03_01_PM.webp"
-              alt="FlightDeck Ingest modal — document health with AI classification"
-            />
-            <div>
-              <h3 className="text-2xl font-bold text-white">Document Health</h3>
-              <p className="mt-4 text-base text-fd-gray leading-relaxed">
-                Every document has a health signal. Green = exists and matches.
-                Yellow = drifted. Red = problem. When it&apos;s red, FlightDeck
-                tells you what&apos;s wrong and gives you a button to fix it.
-              </p>
-            </div>
-          </div>
-
-          {/* Asset Library */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1">
-              <h3 className="text-2xl font-bold text-white">Asset Library</h3>
-              <p className="mt-4 text-base text-fd-gray leading-relaxed">
-                Your brand assets are governed too. 82 icons. Logo variants.
-                Design tokens. Classified, versioned, and linked to the
-                documents that reference them.
-              </p>
-            </div>
-            <div className="order-1 md:order-2 space-y-4">
-              <ScreenshotFrame
-                src="/images/screenshots/6_02_07_PM.webp"
-                alt="FlightDeck Icon Library — 82 classified icons"
-              />
-              <ScreenshotFrame
-                src="/images/screenshots/6_02_10_PM.webp"
-                alt="FlightDeck Logos tab — governed brand assets"
-              />
-            </div>
-          </div>
-        </div>
       </div>
+    </ScrollReveal>
+  );
+}
 
-      <style jsx>{`
-        @keyframes progress {
-          from {
-            width: 0%;
-          }
-          to {
-            width: 100%;
-          }
-        }
-      `}</style>
+export default function ProductSurfaces() {
+  return (
+    <section id="surfaces">
+      {regions.map((region) => (
+        <Region key={region.number} region={region} />
+      ))}
     </section>
   );
 }
