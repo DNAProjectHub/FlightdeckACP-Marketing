@@ -35,8 +35,8 @@ export default function Hero() {
           <p className="mt-4 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-relaxed">
             FlightDeck is the Control Plane for AI software development.
             Coordinate agents, govern execution, and ship real software as a
-            system, not the scattered result of random conversations. Turn
-            business plans into business software.
+            system, not a conversation. Turn business plans into business
+            software.
           </p>
 
           {/* Hero screenshot — constrained */}
