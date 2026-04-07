@@ -40,7 +40,7 @@ export default function Hero() {
           </p>
 
           {/* Hero screenshot — bigger to fill viewport */}
-          <div className="mt-5 w-full max-w-3xl">
+          <div className="mt-5 w-full max-w-4xl">
             <ScreenshotFrame
               src="/images/screenshots/6_01_33_PM.webp"
               alt="FlightDeck ATC — Air Traffic Control showing crew status and flight trajectories"
