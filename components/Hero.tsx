@@ -7,11 +7,11 @@ import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
   return (
-    <section className="relative h-screen min-h-[600px] flex flex-col pt-4 pb-4 overflow-hidden">
+    <section className="relative h-screen min-h-[600px] flex flex-col pt-16 pb-3 overflow-hidden">
       {/* Subtle ambient glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-fd-orange/5 rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="flex-1 mx-auto max-w-5xl px-6 w-full text-center flex flex-col items-center justify-center">
+      <div className="mx-auto max-w-5xl px-6 w-full text-center flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -40,7 +40,7 @@ export default function Hero() {
           </p>
 
           {/* Hero screenshot — constrained */}
-          <div className="mt-10 w-full max-w-2xl">
+          <div className="mt-8 w-full max-w-2xl">
             <ScreenshotFrame
               src="/images/screenshots/6_01_33_PM.webp"
               alt="FlightDeck ATC — Air Traffic Control showing crew status and flight trajectories"
@@ -50,8 +50,10 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ProofStrip pinned at the bottom of the hero viewport */}
-      <ProofStrip />
+      {/* ProofStrip pushed to bottom of hero viewport */}
+      <div className="mt-auto">
+        <ProofStrip />
+      </div>
     </section>
   );
 }

@@ -59,11 +59,11 @@ const tools = [
 
 export default function ProofStrip() {
   return (
-    <div className="w-full pt-2">
-      <p className="text-center text-[11px] text-fd-gray/50 uppercase tracking-widest mb-2">
+    <div className="w-full pt-1">
+      <p className="text-center text-[10px] text-fd-gray/50 uppercase tracking-widest mb-2">
         Works with the stack you already use
       </p>
-      <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-2 max-w-4xl mx-auto px-4">
+      <div className="flex flex-wrap justify-center items-center gap-x-3.5 gap-y-1.5 max-w-5xl mx-auto px-4">
         {tools.map((tool) => (
           <div
             key={tool.name}
