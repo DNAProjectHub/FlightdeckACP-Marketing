@@ -50,27 +50,15 @@ export default function FlightSchool() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.1}>
-          <div className="mt-16 relative max-w-md mx-auto">
-            <ScreenshotFrame
-              src="/images/screenshots/6_03_17_PM.webp"
-              alt="Welcome to Flight School — overview showing three phases"
-            />
-            <div className="mt-3 text-center">
-              <FigLabel number="4.0" />
-            </div>
-          </div>
-        </ScrollReveal>
-
         {/* Three equal phase cards */}
-        <ScrollReveal delay={0.2}>
-          <div className="mt-16 grid md:grid-cols-3 gap-6">
+        <ScrollReveal delay={0.1}>
+          <div className="mt-16 grid md:grid-cols-3 gap-6 items-stretch">
             {phases.map((phase) => (
               <div
                 key={phase.number}
                 className="rounded-xl border border-fd-border bg-fd-surface p-5 flex flex-col"
               >
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-baseline gap-3 mb-4">
                   <span className="font-mono text-xs text-fd-orange">
                     {phase.number}
                   </span>
