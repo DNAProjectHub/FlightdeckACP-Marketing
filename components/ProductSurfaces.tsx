@@ -145,7 +145,7 @@ function Region({ region }: { region: SurfaceRegion }) {
   return (
     <ScrollReveal>
       <div
-        className="border-t border-fd-border py-24"
+        className="snap-section border-t border-fd-border py-16"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >

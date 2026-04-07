@@ -5,7 +5,7 @@ import ScrollReveal from "./ScrollReveal";
 
 export default function FinalCTA() {
   return (
-    <section className="py-32 border-t border-fd-border">
+    <section className="snap-section py-16 border-t border-fd-border">
       <ScrollReveal>
         <div className="mx-auto max-w-2xl px-6 text-center">
           <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">

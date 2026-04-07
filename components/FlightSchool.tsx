@@ -37,7 +37,7 @@ const phases = [
 
 export default function FlightSchool() {
   return (
-    <section id="flightschool" className="py-24 border-t border-fd-border">
+    <section id="flightschool" className="snap-section py-16 border-t border-fd-border">
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
           <SectionLabel number="4.0" label="Onboard" />

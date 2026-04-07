@@ -33,7 +33,7 @@ export default function DevModeCallout() {
   }, [paused, toggle]);
 
   return (
-    <section id="devmode" className="py-24 border-t border-fd-border">
+    <section id="devmode" className="snap-section py-16 border-t border-fd-border">
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
           <SectionLabel number="0.3" label="Two Modes" />
