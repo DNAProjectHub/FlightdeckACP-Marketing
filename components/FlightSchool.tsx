@@ -59,19 +59,9 @@ export default function FlightSchool() {
           </div>
         </ScrollReveal>
 
-        {/* Three-pills intro visual — moved below the paragraph */}
-        <ScrollReveal delay={0.05}>
-          <div className="mt-5 max-w-3xl mx-auto">
-            <ScreenshotFrame
-              src="/images/screenshots/threepills.webp"
-              alt="Three Flight School modules — Co-Pilot Briefing, Mission Control, Tactical Ops"
-            />
-          </div>
-        </ScrollReveal>
-
-        {/* Three smaller phase cards */}
+        {/* Three smaller phase cards — the modules ARE the visual */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-5 grid md:grid-cols-3 gap-3 items-stretch max-w-5xl mx-auto">
+          <div className="mt-8 grid md:grid-cols-3 gap-4 items-stretch max-w-5xl mx-auto">
             {phases.map((phase) => (
               <div
                 key={phase.number}
