@@ -5,27 +5,32 @@ import ScreenshotFrame from "./ScreenshotFrame";
 
 const beats = [
   {
-    copy: "Ideas become specifications.",
+    copy: "Ideas become governed artifacts.",
+    sub: "A 3\u00A0AM idea saved from your phone. Sitting in the inbox until you review it and decide whether it becomes something real.",
     image: "/images/screenshots/6_02_04_PM.webp",
     alt: "Document Manifest — Manifest tab, Planning domain",
   },
   {
-    copy: "Specifications become flight plans.",
+    copy: "Artifacts become specifications.",
+    sub: "A specification is a commitment: if it exists, it will be decomposed into executable work.",
     image: "/images/screenshots/6_02_15_PM.webp",
     alt: "Flight Planification — 37 planified, 172 flight plans",
   },
   {
-    copy: "Flight plans become execution.",
+    copy: "Specifications become flight plans.",
+    sub: "Every flight plan permanently linked back to the spec that created it. The truth chain is never broken.",
     image: "/images/screenshots/6_02_17_PM.webp",
     alt: "Flights — 1 active, 2 in progress, 11 queued",
   },
   {
-    copy: "Every action is governed. Every decision is recorded.",
+    copy: "Flight plans become sprints. Sprints become shipped work.",
+    sub: "These are three separate things. Conflating them is how projects lose their thread. FlightDeck keeps them separate.",
     image: "/images/screenshots/6_02_21_PM.webp",
     alt: "Flight Logs — session receipts, commit counts",
   },
   {
-    copy: "From idea to shipped feature — fully traceable. Nothing floats loose.",
+    copy: "Nothing floats loose. Nothing gets lost. Nothing fails silently.",
+    sub: "Every piece of work traces back to the specification that created it. Every specification traces back to the plan that shaped it.",
     image: "/images/screenshots/6_03_01_PM.webp",
     alt: "Ingest modal — AI classification, high confidence badge",
   },
@@ -72,6 +77,7 @@ export default function SystemScroll() {
                 <p className="mt-6 text-xl font-semibold text-white">
                   {beat.copy}
                 </p>
+                <p className="mt-2 text-sm text-fd-gray">{beat.sub}</p>
               </div>
             ))}
           </div>
@@ -80,13 +86,15 @@ export default function SystemScroll() {
           <div className="hidden lg:grid grid-cols-2 gap-16 items-center">
             <div>
               <span className="text-xs font-semibold tracking-widest text-fd-orange uppercase">
-                The System
+                The Pipeline
               </span>
               <p className="mt-4 text-3xl font-bold text-white leading-snug transition-all duration-500">
                 {beats[activeIndex].copy}
               </p>
+              <p className="mt-4 text-sm text-fd-gray leading-relaxed transition-all duration-500">
+                {beats[activeIndex].sub}
+              </p>
 
-              {/* Progress dots */}
               <div className="mt-8 flex gap-2">
                 {beats.map((_, i) => (
                   <div
@@ -116,23 +124,21 @@ export default function SystemScroll() {
                   <ScreenshotFrame src={beat.image} alt={beat.alt} />
                 </div>
               ))}
-              {/* Reserve space */}
               <div className="invisible">
-                <ScreenshotFrame
-                  src={beats[0].image}
-                  alt=""
-                />
+                <ScreenshotFrame src={beats[0].image} alt="" />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Section tagline — after scroll */}
       <div className="absolute bottom-0 left-0 right-0 pb-24">
         <p className="mx-auto max-w-2xl px-6 text-center text-lg text-fd-gray-light leading-relaxed">
-          That lineage — idea to plan to spec to work item to shipped feature —
-          is not a nice-to-have. It is the product.
+          FlightDeck does not help you with one part of building software. It
+          connects every part — inside a single governed system, where each
+          stage flows naturally into the next, and every piece of work traces
+          permanently to the decision that created it. The pipeline is the
+          product.
         </p>
       </div>
     </section>

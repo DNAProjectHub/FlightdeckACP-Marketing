@@ -14,6 +14,7 @@ const phases = [
     desc: "Complete the intake to configure your governance doctrine, set your experience level, and unlock the full FlightDeck workflow.",
     image: "/images/screenshots/6_03_17_PM.webp",
     alt: "Co-Pilot Briefing — Welcome to Flight School with three configuration phases",
+    comingSoon: false,
   },
   {
     number: "4.2",
@@ -23,6 +24,7 @@ const phases = [
     desc: "Create a new project with governance settings, provider bindings, and crew assignments pre-configured from your profile.",
     image: "/images/screenshots/6_03_31_PM.webp",
     alt: "Mission Control — Create a New Project with 6-step governance flow",
+    comingSoon: false,
   },
   {
     number: "4.3",
@@ -32,6 +34,17 @@ const phases = [
     desc: "Build reusable skills that automate common workflows and execution patterns across your projects.",
     image: "/images/screenshots/6_04_04_PM.webp",
     alt: "Tactical Ops — Skill Building + Setup with AI-proposed structure",
+    comingSoon: false,
+  },
+  {
+    number: "4.4",
+    flightName: "Design Deck",
+    devName: "Visual Foundation",
+    tagline: "Establish your product\u2019s visual system before you write a spec.",
+    desc: "Answer structured questions about your product\u2019s feel, layout, and visual direction. Get back a governed wireframe swatch, core screen blueprints, and design rules \u2014 linked to everything else in the system.",
+    image: "/images/screenshots/6_03_45_PM.webp", // TODO: replace with Design Deck screenshot when built
+    alt: "Design Deck — Visual Foundation setup with guided multiple-choice intake",
+    comingSoon: true,
   },
 ];
 
@@ -52,21 +65,34 @@ export default function FlightSchool() {
             </h2>
             <p className="mt-3 text-sm text-fd-gray leading-relaxed max-w-2xl">
               Before you touch a codebase, FlightDeck configures your AI
-              copilot. Tell it how you work, what your product is, and how
-              your crew should behave. Three modules. Nothing is saved until
-              you review and approve.
+              copilot. Tell it how you work, what your product is, how your
+              crew should behave, and what your product should look like. Four
+              modules. Nothing is saved until you review and approve.
             </p>
           </div>
         </ScrollReveal>
 
-        {/* Three smaller phase cards — the modules ARE the visual */}
+        {/* Four phase cards — 2x2 grid on md, single col on mobile */}
         <ScrollReveal delay={0.1}>
-          <div className="mt-8 grid md:grid-cols-3 gap-4 items-stretch max-w-5xl mx-auto">
+          <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch max-w-5xl mx-auto">
             {phases.map((phase) => (
               <div
                 key={phase.number}
-                className="rounded-lg border border-fd-border bg-fd-surface p-3 flex flex-col"
+                className={`rounded-lg border bg-fd-surface p-3 flex flex-col relative ${
+                  phase.comingSoon
+                    ? "border-fd-border/40 opacity-80"
+                    : "border-fd-border"
+                }`}
               >
+                {/* Coming soon badge */}
+                {phase.comingSoon && (
+                  <div className="absolute top-2 right-2 z-10">
+                    <span className="text-[8px] font-mono uppercase tracking-wider text-fd-orange/70 border border-fd-orange/30 rounded px-1.5 py-0.5">
+                      Coming soon
+                    </span>
+                  </div>
+                )}
+
                 <div className="flex items-baseline gap-2 mb-1">
                   <span className="font-mono text-[10px] text-fd-orange">
                     {phase.number}

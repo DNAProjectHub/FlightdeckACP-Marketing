@@ -30,28 +30,28 @@ const regions: SurfaceRegion[] = [
     headingLine1: "Turn ideas into",
     headingLine2: "governed specs.",
     intro:
-      "Every plan, spec, wireframe, and asset — classified, health-checked, and linked to the work it drives. Specs become work items through a structured process. Truth chains: every task traces to its source.",
+      "Every plan, specification, policy, design document, wireframe, and visual asset in the system — classified, searchable, and health-checked. Every document has a live health indicator. And when it\u2019s red, the system doesn\u2019t just show you a colored dot. It tells you what\u2019s wrong, why it happened, and gives you a button to fix it.",
     tabs: [
       {
         number: "1.1",
         name: "Document Manifest",
         image: "/images/screenshots/6_02_04_PM.webp",
         alt: "FlightDeck Document Manifest — classified documents with health checks",
-        body: "Every document classified, health-checked, and linked to the work it drives.",
+        body: "Every plan, spec, wireframe, and asset — classified, health-checked, and linked to the work it drives. Green means everything matches. Yellow means something has drifted. Red means there\u2019s a problem — and the system tells you what, why, and how to fix it.",
       },
       {
         number: "1.2",
         name: "Flight Planning",
         image: "/images/screenshots/6_02_17_PM.webp",
         alt: "FlightDeck Flight Planning — specs to work items with truth chains",
-        body: "Specs become work items through a governed process. Every task traces to its source spec.",
+        body: "Your execution board. Every flight plan organized by sprint, with completion status, effort, and lineage to the spec that created it. This is where you see the truth chain: this spec produced these flight plans, these are done, these are in progress, these are waiting.",
       },
       {
         number: "1.3",
         name: "Ingest",
         image: "/images/screenshots/6_03_01_PM.webp",
         alt: "FlightDeck Ingest modal — AI classification with health badges",
-        body: "AI classifies new documents on intake. Confidence badges. Always reviewable.",
+        body: "Drop in a markdown document and it gets classified, summarized by AI, and routed through the inbox. Drop in a JSX wireframe and it renders as a live, interactive preview. You don\u2019t have to tell FlightDeck what kind of file you\u2019re giving it.",
       },
     ],
   },
@@ -61,28 +61,28 @@ const regions: SurfaceRegion[] = [
     headingLine1: "Coordinate",
     headingLine2: "the crew.",
     intro:
-      "Your command deck. ATC narrates current state. The crew has defined roles, fuel gauges, and full comms logs. You manage a team, not a chatbox.",
+      "You are the pilot in command. Your AI tools are your crew. Each one has a defined job, clear limits, and rules about what it can and cannot do without your sign-off. You manage a team, not a chatbox.",
     tabs: [
       {
         number: "2.1",
         name: "Cockpit",
         image: "/images/screenshots/6_01_42_PM.webp",
         alt: "FlightDeck Cockpit — command deck with ATC Readout and cautions",
-        body: "Your command deck. ATC Readout narrates project state. Cautions surface in plain language when your system needs a decision.",
+        body: "Your at-a-glance command deck. Every session starts here. A full automated preflight check reads your project\u2019s health every time you start — document status, inbox items, spec coverage, flight plan status, provider connections, and agent context levels — so you always know where you stand before you touch a thing.",
       },
       {
         number: "2.2",
         name: "ATC",
         image: "/images/screenshots/6_01_33_PM.webp",
         alt: "FlightDeck ATC — portfolio command with crew fuel gauges",
-        body: "Portfolio command. Session timer. Crew fuel gauges. Multi-project trajectories with real ETAs. The full picture from one surface.",
+        body: "Portfolio command across all projects. Session timer. Crew fuel gauges. Multi-project trajectories with current phase and destination. The full picture from one surface.",
       },
       {
         number: "2.3",
         name: "Crew Manifest",
         image: "/images/screenshots/6_01_45_PM.webp",
         alt: "FlightDeck Crew Manifest — agent roles and fuel gauges",
-        body: "Danny is Pilot. ChatGPT is Architect. Claude is Reasoner. Claude Code is Implementer. Defined roles. Full comms logs.",
+        body: "Your AI team roster. Which tools are connected, what each one has been asked to do, what they\u2019ve produced, and the full history of your conversations with them. Danny is Pilot. ChatGPT is Architect. Claude is Reasoner. Claude Code is Implementer.",
       },
     ],
   },
@@ -92,28 +92,28 @@ const regions: SurfaceRegion[] = [
     headingLine1: "Receipts for",
     headingLine2: "everything.",
     intro:
-      "Session history, decisions, commits, and receipts. Diagnostics, secrets, and system health. Schema explorer for the data structures underneath.",
+      "Session history, decisions, commits, and receipts. Nothing fails silently — when something goes wrong, FlightDeck tells you what happened, why it matters, and what to do about it. In plain language. With a button to fix it.",
     tabs: [
       {
         number: "3.1",
         name: "Flight Logs",
         image: "/images/screenshots/6_02_21_PM.webp",
         alt: "FlightDeck Flight Logs — session history and commit receipts",
-        body: 'Session history, decisions, commits, and receipts. You never ask "what happened last Tuesday?" again.',
+        body: "The historical memory of the system. Session history, receipts, prior decisions, archived past work, and the history of your dispatches with your AI crew. This is where you go when you need to know what happened before now. No more \u201Cwhat was I doing last Tuesday?\u201D",
       },
       {
         number: "3.2",
         name: "Maintenance",
         image: "/images/screenshots/6_01_55_PM.webp",
         alt: "FlightDeck Maintenance — diagnostics and system health",
-        body: "Diagnostics, provider bindings, secrets, system health. The hangar where the system services itself.",
+        body: "Your service hangar. Diagnostic tools, security settings, system preferences, provider bindings, key rotation, and the machinery you need to keep the system healthy and under control.",
       },
       {
         number: "3.3",
         name: "Schema Explorer",
         image: "/images/screenshots/6_01_59_PM.webp",
         alt: "FlightDeck Schema Explorer — schema explorer and query console",
-        body: "Schema explorer and query console. Your system's data structure — visible and inspectable.",
+        body: "Safe, structured visibility into your project\u2019s database schema. You can explore tables, columns, relationships, and indexes without needing raw database tooling. The system makes your data structure legible without putting you in a position to accidentally damage it.",
       },
     ],
   },
@@ -167,7 +167,6 @@ function Region({ region }: { region: SurfaceRegion }) {
             </p>
           </div>
 
-          {/* Screenshots — fade between tabs, constrained */}
           <div className="mt-6 relative max-w-3xl mx-auto">
             {region.tabs.map((t, i) => (
               <div
@@ -187,7 +186,6 @@ function Region({ region }: { region: SurfaceRegion }) {
             </div>
           </div>
 
-          {/* Body copy — fade with tab */}
           <div className="mt-4 max-w-2xl mx-auto text-center relative min-h-[2.5rem]">
             {region.tabs.map((t, i) => (
               <p
@@ -203,7 +201,6 @@ function Region({ region }: { region: SurfaceRegion }) {
             ))}
           </div>
 
-          {/* Pills with progress bar */}
           <div className="mt-6 flex justify-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6">
             {region.tabs.map((t, i) => (
               <button

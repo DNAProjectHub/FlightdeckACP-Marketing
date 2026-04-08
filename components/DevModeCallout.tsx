@@ -6,11 +6,8 @@ import ScrollReveal from "./ScrollReveal";
 import SectionLabel from "./SectionLabel";
 import FigLabel from "./FigLabel";
 
-// Each row has a flight name and a tech (developer) name.
-// In Flight mode the flight name is the title and tech is the subtitle.
-// In Dev mode it inverts.
 const mappings = [
-  { flight: "ATC", tech: "Air traffic control" },
+  { flight: "ATC", tech: "System Overview" },
   { flight: "Cockpit", tech: "Overview & course setting" },
   { flight: "Crew Manifest", tech: "Agents, connections & status" },
   { flight: "Maintenance", tech: "Diagnostics, keys & prefs" },
@@ -36,7 +33,7 @@ export default function DevModeCallout() {
     <section id="devmode" className="snap-section py-16 border-t border-fd-border">
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal>
-          <SectionLabel number="0.3" label="Two Modes" />
+          <SectionLabel number="0.3" label="Two Vocabularies" />
           <div className="mt-6 grid lg:grid-cols-2 gap-12 items-end">
             <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1]">
               Aviation metaphors,
@@ -44,14 +41,17 @@ export default function DevModeCallout() {
               <span className="text-fd-gray/60">or developer naming.</span>
             </h2>
             <p className="text-base text-fd-gray leading-relaxed max-w-md">
-              One toggle switches every label in the system. Same data, same
-              governance, same surfaces — pick the language you think in.
+              FlightDeck knows that not every founder needs the same level of
+              guidance, and not every founder wants to navigate by metaphor. So
+              the entire product has two synchronized vocabularies — not two
+              different products. One toggle switches every label in the system.
+              The data, the governance, the functionality — none of it changes.
+              Only the labels do.
             </p>
           </div>
         </ScrollReveal>
 
         <div className="mt-12 grid lg:grid-cols-[280px_1fr] gap-8 items-start">
-          {/* Compact list with title + subtitle that swap */}
           <ScrollReveal direction="left">
             <div
               className="rounded-lg border border-fd-border bg-fd-surface overflow-hidden cursor-pointer select-none"
@@ -59,7 +59,6 @@ export default function DevModeCallout() {
               onMouseLeave={() => setPaused(false)}
               onClick={toggle}
             >
-              {/* Toggle header */}
               <div className="flex items-center justify-between px-3 py-2 border-b border-fd-border">
                 <div className="relative flex rounded-full bg-fd-black p-0.5">
                   <span
@@ -89,7 +88,6 @@ export default function DevModeCallout() {
                 </span>
               </div>
 
-              {/* Rows with title and subtitle */}
               {mappings.map((m, i) => {
                 const title = devMode ? m.tech : m.flight;
                 const subtitle = devMode ? m.flight : m.tech;
@@ -118,7 +116,6 @@ export default function DevModeCallout() {
             </p>
           </ScrollReveal>
 
-          {/* Screenshot that swaps coordinated with the toggle */}
           <ScrollReveal direction="right" delay={0.15}>
             <div className="relative">
               <div
@@ -151,6 +148,12 @@ export default function DevModeCallout() {
                   {devMode ? "Dev Mode" : "Flight Mode"}
                 </span>
               </div>
+              <p className="mt-4 text-sm text-fd-gray leading-relaxed">
+                It is the same system speaking two languages simultaneously: one
+                for founders who want to navigate by intuition, one for
+                developers who want precise technical vocabulary. You can switch
+                at any time. They are two views of one product.
+              </p>
             </div>
           </ScrollReveal>
         </div>

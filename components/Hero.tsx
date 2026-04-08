@@ -1,14 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import ScreenshotFrame from "./ScreenshotFrame";
 import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
   return (
-    <section className="snap-section relative pt-20 pb-6 overflow-hidden">
-      {/* Subtle ambient glow */}
+    <section className="snap-section relative pt-10 pb-4 overflow-hidden">
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-fd-orange/5 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="mx-auto max-w-5xl px-6 w-full text-center">
@@ -18,29 +16,33 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center w-full"
         >
-          <Image
-            src="/images/logo.png"
-            alt="FlightDeck"
-            width={551}
-            height={199}
-            priority
-            className="h-12 sm:h-16 w-auto mb-4"
-          />
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.05] whitespace-nowrap">
-            Plan the Work.{" "}
-            <span className="text-fd-gray/60">Ship the Plan.</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
+            <span className="block text-fd-orange mb-1">FlightDeck</span>
+            Build a real app
+            <br />
+            <span className="text-white/50 text-xl sm:text-2xl md:text-3xl font-semibold leading-tight mt-1 block">
+              before AI convinces you that you already did.
+            </span>
           </h1>
 
-          <p className="mt-3 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-relaxed">
-            FlightDeck is the Control Plane for AI software development.
-            Coordinate agents, govern execution, and ship real software as a
-            system, not a conversation. Turn business plans into business
-            software.
-          </p>
+          <div className="mt-3 text-sm sm:text-base text-fd-gray max-w-3xl mx-auto leading-[1.75] space-y-3 text-left">
+            <p>
+              Don&apos;t lose months building an app that will never work. AI
+              makes half-built things look finished and fake things look real by
+              covering for broken data wiring and missing schema structure with
+              hardcoded data, simulated behavior, and convincing output that is
+              not coming from a real working system at all.
+            </p>
+            <p>
+              When you replace the sample data with real data from a real
+              database, that&apos;s the moment you realize what you&apos;ve{" "}
+              <em>actually done</em>: you&apos;ve built a fa&ccedil;ade, not a
+              real building. Walk through the doorway and you&apos;re back in
+              the wilderness.
+            </p>
+          </div>
 
-          {/* Hero screenshot — bigger to fill viewport */}
-          <div className="mt-5 w-full max-w-4xl">
+          <div className="mt-3 w-full max-w-3xl">
             <ScreenshotFrame
               src="/images/screenshots/6_01_33_PM.webp"
               alt="FlightDeck ATC — Air Traffic Control showing crew status and flight trajectories"
@@ -50,8 +52,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ProofStrip — natural flow, right under the screenshot */}
-      <div className="mt-6">
+      <div className="mt-4">
         <ProofStrip />
       </div>
     </section>
