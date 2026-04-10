@@ -1,6 +1,6 @@
 "use client";
 
-import ScreenshotFrame from "./ScreenshotFrame";
+import ScreenshotCarousel from "./ScreenshotCarousel";
 import ScrollReveal from "./ScrollReveal";
 import SectionLabel from "./SectionLabel";
 import FigLabel from "./FigLabel";
@@ -12,8 +12,16 @@ const phases = [
     devName: "Governance",
     tagline: "How your co-pilot communicates, decides, and operates.",
     desc: "Complete the intake to configure your governance doctrine, set your experience level, and unlock the full FlightDeck workflow.",
-    image: "/images/screenshots/6_03_17_PM.webp",
-    alt: "Co-Pilot Briefing — Welcome to Flight School with three configuration phases",
+    images: [
+      "Flight-School-Welcome",
+      "Flight-School-Experience-Calibration",
+      "Flight-School-Phase1-Intro",
+      "Flight-School-Phase1-Communication-Style",
+      "Flight-School-Phase1-Humor",
+      "Flight-School-Phase1-Mood-Tone",
+      "CoPilot-Briefing-Card-Closeup",
+    ],
+    alt: "Co-Pilot Briefing — Flight School governance setup",
     comingSoon: false,
   },
   {
@@ -22,8 +30,17 @@ const phases = [
     devName: "Projects",
     tagline: "Define your project, configure infrastructure, and bind services.",
     desc: "Create a new project with governance settings, provider bindings, and crew assignments pre-configured from your profile.",
-    image: "/images/screenshots/6_03_31_PM.webp",
-    alt: "Mission Control — Create a New Project with 6-step governance flow",
+    images: [
+      "Mission-Control-Create-New-Project",
+      "Mission-Control-New-or-Existing",
+      "Mission-Control-Project-Role",
+      "Mission-Control-Project-Name",
+      "Mission-Control-Short-Code",
+      "Mission-Control-Project-Description",
+      "Mission-Control-Whats-Already-In-Place",
+      "Mission-Control-Card-Closeup",
+    ],
+    alt: "Mission Control — project creation flow",
     comingSoon: false,
   },
   {
@@ -32,8 +49,12 @@ const phases = [
     devName: "Skills",
     tagline: "Create reusable skills and workflow patterns.",
     desc: "Build reusable skills that automate common workflows and execution patterns across your projects.",
-    image: "/images/screenshots/6_04_04_PM.webp",
-    alt: "Tactical Ops — Skill Building + Setup with AI-proposed structure",
+    images: [
+      "Tactical-Ops-Skill-Building-Setup",
+      "Tactical-Ops-Skill-Building-Setup-Expanded",
+      "Tactical-Ops-Card-Closeup",
+    ],
+    alt: "Tactical Ops — skill building setup",
     comingSoon: false,
   },
   {
@@ -42,8 +63,8 @@ const phases = [
     devName: "Visual Foundation",
     tagline: "Establish your product\u2019s visual system before you write a spec.",
     desc: "Answer structured questions about your product\u2019s feel, layout, and visual direction. Get back a governed wireframe swatch, core screen blueprints, and design rules \u2014 linked to everything else in the system.",
-    image: "/images/screenshots/6_03_45_PM.webp", // TODO: replace with Design Deck screenshot when built
-    alt: "Design Deck — Visual Foundation setup with guided multiple-choice intake",
+    images: ["Flight-School-Welcome"],
+    alt: "Design Deck — coming soon",
     comingSoon: true,
   },
 ];
@@ -107,7 +128,7 @@ export default function FlightSchool() {
                 <p className="text-[10px] text-fd-gray/70 mb-2 leading-snug">
                   {phase.tagline}
                 </p>
-                <ScreenshotFrame src={phase.image} alt={phase.alt} />
+                <ScreenshotCarousel images={phase.images} alt={phase.alt} autoRotateInterval={3500} />
                 <div className="mt-2">
                   <FigLabel number={phase.number} />
                 </div>

@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import ScreenshotFrame from "./ScreenshotFrame";
+import ScreenshotCarousel from "./ScreenshotCarousel";
 import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
@@ -16,8 +17,16 @@ export default function Hero() {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center w-full"
         >
+          <Image
+            src="/images/logo.png"
+            alt="FlightDeck"
+            width={551}
+            height={199}
+            priority
+            className="h-10 sm:h-12 w-auto mb-2"
+          />
+
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
-            <span className="block text-fd-orange mb-1">FlightDeck</span>
             Build a real app
             <br />
             <span className="text-white/50 text-xl sm:text-2xl md:text-3xl font-semibold leading-tight mt-1 block">
@@ -43,9 +52,16 @@ export default function Hero() {
           </div>
 
           <div className="mt-3 w-full max-w-3xl">
-            <ScreenshotFrame
-              src="/images/screenshots/6_01_33_PM.webp"
-              alt="FlightDeck ATC — Air Traffic Control showing crew status and flight trajectories"
+            <ScreenshotCarousel
+              images={[
+                "Home-Terminal",
+                "Home-Terminal-with-Terminal-Panel",
+                "Home-Terminal-with-Notification",
+                "Cockpit",
+                "Cockpit-with-overlay",
+                "Crew-Manifest",
+              ]}
+              alt="FlightDeck — project command and overview"
               priority
             />
           </div>

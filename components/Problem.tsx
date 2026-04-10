@@ -1,11 +1,56 @@
 "use client";
 
+import { useState } from "react";
 import ScrollReveal from "./ScrollReveal";
-import ScreenshotFrame from "./ScreenshotFrame";
 import SectionLabel from "./SectionLabel";
-import FigLabel from "./FigLabel";
+import ScreenshotCarousel from "./ScreenshotCarousel";
+
+const YT_VIDEO_ID = "A_HtyXzAuPI";
+
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
 
 export default function Problem() {
+  const [started, setStarted] = useState(false);
+  const [videoEnded, setVideoEnded] = useState(false);
+
+  const handlePlay = () => {
+    setStarted(true);
+
+    const initPlayer = () => {
+      new window.YT.Player("problem-yt-player", {
+        videoId: YT_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          rel: 0,
+          modestbranding: 1,
+          controls: 1,
+          playsinline: 1,
+        },
+        events: {
+          onStateChange: (e: any) => {
+            if (e.data === window.YT.PlayerState.ENDED) {
+              setVideoEnded(true);
+            }
+          },
+        },
+      });
+    };
+
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    } else {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+      window.onYouTubeIframeAPIReady = initPlayer;
+    }
+  };
+
   return (
     <section
       id="problem"
@@ -63,29 +108,51 @@ export default function Problem() {
         </ScrollReveal>
 
         <ScrollReveal direction="right" delay={0.15}>
-          <div className="rounded-xl border border-fd-yellow/20 bg-fd-surface p-6">
-            <SectionLabel
-              number="0.2"
-              label="No Silent Failures"
-              className="mb-4"
-            />
-            <ScreenshotFrame
-              src="/images/screenshots/6_01_42_PM.webp"
-              alt="FlightDeck Cockpit showing warning caution row"
-            />
-            <div className="mt-3">
-              <FigLabel number="0.2" />
+          <div className="relative">
+
+            {/* Screenshot — fades in when video ends */}
+            <div className={`transition-opacity duration-700 ${videoEnded ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"}`}>
+              <ScreenshotCarousel
+                images={["Cockpit", "Cockpit-with-overlay"]}
+                alt="FlightDeck Cockpit showing system health and cautions"
+              />
             </div>
-            <blockquote className="mt-5 text-base text-fd-gray-light italic border-l-2 border-fd-yellow/40 pl-4">
-              &ldquo;Claude Code context at 88%. Recommend refuel before heavy
-              implementation work.&rdquo;
-            </blockquote>
-            <p className="mt-3 text-sm text-fd-gray leading-relaxed">
-              A warning without an explanation is a product failure. The system
-              must never report a problem without a solution — telling you what
-              is wrong, why it matters, and what to do about it, in plain
-              language, with a button to fix it whenever possible.
-            </p>
+
+            {/* Video slot */}
+            <div className={`transition-opacity duration-700 ${videoEnded ? "opacity-0 absolute inset-0 pointer-events-none" : "opacity-100 relative"}`}>
+              <div
+                id="problem-yt-player"
+                className="w-full rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-fd-orange/5"
+                style={{ aspectRatio: "16/9", display: started ? "block" : "none" }}
+              />
+
+              {!started && (
+                <button
+                  onClick={handlePlay}
+                  className="relative w-full rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-fd-orange/5 group cursor-pointer block"
+                  aria-label="Play video"
+                >
+                  <img
+                    src={`https://img.youtube.com/vi/${YT_VIDEO_ID}/maxresdefault.jpg`}
+                    alt="The Anatomy of an Illusion — Why AI Apps Break"
+                    className="w-full h-auto"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 group-hover:bg-black/40 transition-colors">
+                    <div className="w-14 h-14 rounded-full bg-fd-orange flex items-center justify-center shadow-lg shadow-fd-orange/40 group-hover:scale-105 transition-transform">
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-black ml-1">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-sm rounded px-2 py-1">
+                    <p className="text-xs text-fd-gray-light font-medium">
+                      The Anatomy of an Illusion — Why AI Apps Break
+                    </p>
+                  </div>
+                </button>
+              )}
+            </div>
+
           </div>
         </ScrollReveal>
       </div>

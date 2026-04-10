@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import ScreenshotFrame from "./ScreenshotFrame";
+import ScreenshotCarousel from "./ScreenshotCarousel";
 import ScrollReveal from "./ScrollReveal";
 import SectionLabel from "./SectionLabel";
 import FigLabel from "./FigLabel";
@@ -9,7 +9,7 @@ import FigLabel from "./FigLabel";
 interface SubTab {
   number: string;
   name: string;
-  image: string;
+  images: string[];
   alt: string;
   body: string;
 }
@@ -21,6 +21,7 @@ interface SurfaceRegion {
   headingLine2: string;
   intro: string;
   tabs: SubTab[];
+  visualSide: "left" | "right";
 }
 
 const regions: SurfaceRegion[] = [
@@ -29,28 +30,36 @@ const regions: SurfaceRegion[] = [
     label: "Plan",
     headingLine1: "Turn ideas into",
     headingLine2: "governed specs.",
+    visualSide: "right",
     intro:
       "Every plan, specification, policy, design document, wireframe, and visual asset in the system — classified, searchable, and health-checked. Every document has a live health indicator. And when it\u2019s red, the system doesn\u2019t just show you a colored dot. It tells you what\u2019s wrong, why it happened, and gives you a button to fix it.",
     tabs: [
       {
         number: "1.1",
         name: "Document Manifest",
-        image: "/images/screenshots/6_02_04_PM.webp",
-        alt: "FlightDeck Document Manifest — classified documents with health checks",
+        images: [
+          "Document-Manifest-Inbox",
+          "Document-Manifest-Icon-Library",
+          "Document-Manifest-Logos",
+          "Document-Manifest-Logos-Ingest-Modal",
+          "Document-Manifest-Logos-with-Terminal-Build",
+          "Document-Manifest-Logos-with-Terminal-Agent",
+        ],
+        alt: "FlightDeck Document Manifest",
         body: "Every plan, spec, wireframe, and asset — classified, health-checked, and linked to the work it drives. Green means everything matches. Yellow means something has drifted. Red means there\u2019s a problem — and the system tells you what, why, and how to fix it.",
       },
       {
         number: "1.2",
         name: "Flight Planning",
-        image: "/images/screenshots/6_02_17_PM.webp",
-        alt: "FlightDeck Flight Planning — specs to work items with truth chains",
+        images: ["Flights-List", "Flight-Planification", "Flight-Logs"],
+        alt: "FlightDeck Flight Planning",
         body: "Your execution board. Every flight plan organized by sprint, with completion status, effort, and lineage to the spec that created it. This is where you see the truth chain: this spec produced these flight plans, these are done, these are in progress, these are waiting.",
       },
       {
         number: "1.3",
         name: "Ingest",
-        image: "/images/screenshots/6_03_01_PM.webp",
-        alt: "FlightDeck Ingest modal — AI classification with health badges",
+        images: ["Document-Manifest-Logos-Ingest-Modal", "Ingest-Document-Closeup"],
+        alt: "FlightDeck Ingest",
         body: "Drop in a markdown document and it gets classified, summarized by AI, and routed through the inbox. Drop in a JSX wireframe and it renders as a live, interactive preview. You don\u2019t have to tell FlightDeck what kind of file you\u2019re giving it.",
       },
     ],
@@ -60,28 +69,34 @@ const regions: SurfaceRegion[] = [
     label: "Execute",
     headingLine1: "Coordinate",
     headingLine2: "the crew.",
+    visualSide: "left",
     intro:
       "You are the pilot in command. Your AI tools are your crew. Each one has a defined job, clear limits, and rules about what it can and cannot do without your sign-off. You manage a team, not a chatbox.",
     tabs: [
       {
         number: "2.1",
         name: "Cockpit",
-        image: "/images/screenshots/6_01_42_PM.webp",
-        alt: "FlightDeck Cockpit — command deck with ATC Readout and cautions",
+        images: ["Cockpit", "Cockpit-with-overlay"],
+        alt: "FlightDeck Cockpit",
         body: "Your at-a-glance command deck. Every session starts here. A full automated preflight check reads your project\u2019s health every time you start — document status, inbox items, spec coverage, flight plan status, provider connections, and agent context levels — so you always know where you stand before you touch a thing.",
       },
       {
         number: "2.2",
         name: "ATC",
-        image: "/images/screenshots/6_01_33_PM.webp",
-        alt: "FlightDeck ATC — portfolio command with crew fuel gauges",
+        images: [
+          "Home-Terminal",
+          "Home-Terminal-with-Terminal-Panel",
+          "Home-Terminal-with-Notification",
+          "Home-Terminal-Cards-Closeup",
+        ],
+        alt: "FlightDeck ATC",
         body: "Portfolio command across all projects. Session timer. Crew fuel gauges. Multi-project trajectories with current phase and destination. The full picture from one surface.",
       },
       {
         number: "2.3",
         name: "Crew Manifest",
-        image: "/images/screenshots/6_01_45_PM.webp",
-        alt: "FlightDeck Crew Manifest — agent roles and fuel gauges",
+        images: ["Crew-Manifest", "Dev-Mode-Agents-and-Connections"],
+        alt: "FlightDeck Crew Manifest",
         body: "Your AI team roster. Which tools are connected, what each one has been asked to do, what they\u2019ve produced, and the full history of your conversations with them. Danny is Pilot. ChatGPT is Architect. Claude is Reasoner. Claude Code is Implementer.",
       },
     ],
@@ -91,28 +106,29 @@ const regions: SurfaceRegion[] = [
     label: "Govern",
     headingLine1: "Receipts for",
     headingLine2: "everything.",
+    visualSide: "right",
     intro:
       "Session history, decisions, commits, and receipts. Nothing fails silently — when something goes wrong, FlightDeck tells you what happened, why it matters, and what to do about it. In plain language. With a button to fix it.",
     tabs: [
       {
         number: "3.1",
         name: "Flight Logs",
-        image: "/images/screenshots/6_02_21_PM.webp",
-        alt: "FlightDeck Flight Logs — session history and commit receipts",
+        images: ["Flight-Logs", "Dev-Mode-Session-History"],
+        alt: "FlightDeck Flight Logs",
         body: "The historical memory of the system. Session history, receipts, prior decisions, archived past work, and the history of your dispatches with your AI crew. This is where you go when you need to know what happened before now. No more \u201Cwhat was I doing last Tuesday?\u201D",
       },
       {
         number: "3.2",
         name: "Maintenance",
-        image: "/images/screenshots/6_01_55_PM.webp",
-        alt: "FlightDeck Maintenance — diagnostics and system health",
+        images: ["Maintenance-System-Health", "Dev-Mode-Settings-System-Health"],
+        alt: "FlightDeck Maintenance",
         body: "Your service hangar. Diagnostic tools, security settings, system preferences, provider bindings, key rotation, and the machinery you need to keep the system healthy and under control.",
       },
       {
         number: "3.3",
         name: "Schema Explorer",
-        image: "/images/screenshots/6_01_59_PM.webp",
-        alt: "FlightDeck Schema Explorer — schema explorer and query console",
+        images: ["Data-Structures", "Dev-Mode-Schema-Explorer"],
+        alt: "FlightDeck Schema Explorer",
         body: "Safe, structured visibility into your project\u2019s database schema. You can explore tables, columns, relationships, and indexes without needing raw database tooling. The system makes your data structure legible without putting you in a position to accidentally damage it.",
       },
     ],
@@ -125,6 +141,8 @@ function Region({ region }: { region: SurfaceRegion }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef(false);
   const count = region.tabs.length;
 
   const advance = useCallback(() => {
@@ -134,10 +152,34 @@ function Region({ region }: { region: SurfaceRegion }) {
   useEffect(() => {
     if (paused) return;
     timerRef.current = setTimeout(advance, DURATION);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [active, paused, advance]);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!isVisibleRef.current) return;
+      const target = e.target as HTMLElement;
+      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) return;
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      if (timerRef.current) clearTimeout(timerRef.current);
+      setPaused(true);
+      setActive(a => e.key === "ArrowRight" ? (a + 1) % count : (a - 1 + count) % count);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [count]);
 
   const handleTabClick = (i: number) => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -149,51 +191,58 @@ function Region({ region }: { region: SurfaceRegion }) {
   return (
     <ScrollReveal>
       <div
-        className="snap-section border-t border-fd-border py-12"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        ref={sectionRef}
+        className="snap-section border-t border-fd-border py-16"
       >
         <div className="mx-auto max-w-6xl px-6">
-          <SectionLabel number={region.number} label={region.label} />
-
-          <div className="mt-4 grid lg:grid-cols-2 gap-8 items-end">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.05]">
-              {region.headingLine1}
-              <br />
-              <span className="text-fd-gray/60">{region.headingLine2}</span>
-            </h2>
-            <p className="text-sm text-fd-gray leading-relaxed max-w-md">
-              {region.intro}
-            </p>
-          </div>
-
-          <div className="mt-6 relative max-w-3xl mx-auto">
-            {region.tabs.map((t, i) => (
-              <div
-                key={t.number}
-                className={`transition-opacity duration-700 ${
-                  i === active
-                    ? "opacity-100 relative"
-                    : "opacity-0 absolute inset-0 pointer-events-none"
-                }`}
-              >
-                <ScreenshotFrame src={t.image} alt={t.alt} />
+          {/* Top row: heading left, intro right — balanced */}
+          <ScrollReveal>
+            <div className="grid lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 items-end">
+              <div>
+                <SectionLabel number={region.number} label={region.label} />
+                <h2 className="mt-4 text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.05]">
+                  {region.headingLine1}
+                  <br />
+                  <span className="text-fd-gray/60">{region.headingLine2}</span>
+                </h2>
               </div>
-            ))}
-            <div className="mt-2 flex items-center justify-between">
-              <FigLabel number={tab.number} />
-              <span className="text-xs text-fd-gray/50">{tab.name}</span>
+              <p className="text-base text-fd-gray leading-relaxed">
+                {region.intro}
+              </p>
             </div>
-          </div>
+          </ScrollReveal>
 
-          <div className="mt-4 max-w-2xl mx-auto text-center relative min-h-[2.5rem]">
+          {/* Full-width carousel */}
+          <ScrollReveal delay={0.1}>
+            <div
+              className="mt-8 relative max-w-4xl mx-auto"
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              {region.tabs.map((t, i) => (
+                <div
+                  key={t.number}
+                  className={`transition-opacity duration-700 ${
+                    i === active ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"
+                  }`}
+                >
+                  <ScreenshotCarousel images={t.images} alt={t.alt} />
+                </div>
+              ))}
+              <div className="mt-2 flex items-center justify-between">
+                <FigLabel number={tab.number} />
+                <span className="text-xs text-fd-gray/50">{tab.name}</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Active tab body copy */}
+          <div className="mt-6 relative min-h-[3rem] max-w-3xl mx-auto text-center">
             {region.tabs.map((t, i) => (
               <p
                 key={t.number}
                 className={`text-sm text-fd-gray-light leading-relaxed transition-opacity duration-500 ${
-                  i === active
-                    ? "opacity-100 relative"
-                    : "opacity-0 absolute inset-0 pointer-events-none"
+                  i === active ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"
                 }`}
               >
                 {t.body}
@@ -201,12 +250,13 @@ function Region({ region }: { region: SurfaceRegion }) {
             ))}
           </div>
 
-          <div className="mt-6 flex justify-center gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-6 px-6">
+          {/* Pills */}
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
             {region.tabs.map((t, i) => (
               <button
                 key={t.number}
                 onClick={() => handleTabClick(i)}
-                className={`shrink-0 group relative overflow-hidden flex items-baseline gap-2 rounded-md border px-4 py-2 text-sm transition-all ${
+                className={`group relative overflow-hidden flex items-baseline gap-2 rounded-md border px-4 py-2 text-sm transition-all ${
                   i === active
                     ? "border-fd-orange/40 bg-fd-orange/5 text-white"
                     : "border-fd-border bg-fd-surface text-fd-gray hover:border-fd-orange/20 hover:text-fd-gray-light"
@@ -216,22 +266,17 @@ function Region({ region }: { region: SurfaceRegion }) {
                   <span
                     key={active}
                     className="absolute bottom-0 left-0 h-[2px] bg-fd-orange/60 rounded-full"
-                    style={{
-                      animation: `pill-progress ${DURATION}ms linear forwards`,
-                    }}
+                    style={{ animation: `pill-progress ${DURATION}ms linear forwards` }}
                   />
                 )}
-                <span
-                  className={`font-mono text-xs ${
-                    i === active ? "text-fd-orange" : "text-fd-gray/50"
-                  }`}
-                >
+                <span className={`font-mono text-xs ${i === active ? "text-fd-orange" : "text-fd-gray/50"}`}>
                   {t.number}
                 </span>
                 <span className="font-medium">{t.name}</span>
               </button>
             ))}
           </div>
+          <p className="mt-3 text-center text-[10px] text-fd-gray/30 tracking-widest uppercase">← → to browse</p>
         </div>
       </div>
     </ScrollReveal>
