@@ -38,14 +38,15 @@ export default function ScreenshotCarousel({
   const count = images.length;
   const hasMultiple = count > 1 && !staticMode;
 
-  // Flip to true after hydration so staticMode images only gain their `src`
-  // on the client. This keeps the SSR HTML free of static-mode srcs (so
-  // React can't flush a <link rel=preload> hint for below-the-fold cards)
-  // while still handing the browser a plain <img> with a real src to lazy-
-  // load normally on scroll.
+  // Flip to true after hydration so non-priority images only gain their
+  // `src` on the client. This keeps the SSR HTML free of srcs for every
+  // carousel except Hero (which passes `priority`), so React can't flush
+  // `<link rel=preload>` hints for below-the-fold images. Once src appears
+  // on the client, `loading="lazy"` lets the browser defer fetching until
+  // the image actually scrolls into view.
   useEffect(() => { setHydrated(true); }, []);
 
-  const thumb = (name: string) => `${basePath}/${THUMB_DIR}/${name}.jpg`;
+  const thumb = (name: string) => `${basePath}/${THUMB_DIR}/${name}.webp`;
   const original = (name: string) => `${basePath}/${ORIGINAL_DIR}/${name}.png`;
 
   const advance = useCallback((dir: number) => {
@@ -130,38 +131,46 @@ export default function ScreenshotCarousel({
           {staticMode ? (
             /* Static-mode preview cards are small on every viewport, so always
                use the thumb regardless of screen size. `src` is only attached
-               after client hydration (`hydrated` flips in a useEffect) so the
-               SSR HTML has no src → React can't flush a <link rel=preload>
-               hint for below-the-fold cards. Once src appears on the client,
-               `loading="lazy"` lets the browser defer fetching until the
-               card scrolls into view. Explicit width/height reserve the
-               correct aspect ratio so `w-full h-auto` has real height while
-               the src is absent. Thumbs are generated at 1200 px long edge;
-               every current static caller uses portrait Flight School
-               screenshots at 748×1200. */
+               after client hydration, so the SSR HTML has no src and React
+               can't flush a `<link rel=preload>` hint for these cards. Once
+               src appears on the client, `loading="lazy"` defers the fetch
+               until the card scrolls into view. Explicit width/height reserve
+               the correct aspect ratio so `w-full h-auto` has real height
+               while src is absent. Thumbs are 900 px on the long edge; every
+               current static caller uses portrait Flight School screenshots
+               which resize to ~561×900. */
             <img
               src={hydrated ? thumb(images[active]) : undefined}
               alt={alt}
-              width={748}
-              height={1200}
+              width={561}
+              height={900}
               loading="lazy"
               decoding="async"
               draggable={false}
               className="w-full h-auto"
             />
           ) : (
+            /* Non-static front card. Only `priority` carousels (Hero) ship a
+               src in the SSR HTML; everything else defers src attachment
+               until client hydration, then lets `loading="lazy"` take over.
+               This means:
+                 - Below-the-fold carousels are never SSR-preloaded
+                 - They don't fetch until the user scrolls close to them
+                 - Hero still loads immediately on first paint
+               Explicit width/height (900×562 ≈ 16/10) reserves correct
+               landscape aspect ratio so the container has real height while
+               src is absent. Mobile uses WebP thumbs via <source>; desktop
+               falls back to originals/*.png via <img src>. */
             <picture>
-              <source media="(max-width: 680px)" srcSet={thumb(images[active])} />
+              {(priority || hydrated) && (
+                <source media="(max-width: 680px)" srcSet={thumb(images[active])} />
+              )}
               <img
-                src={original(images[active])}
+                src={priority || hydrated ? original(images[active]) : undefined}
                 alt={alt}
-                /* Eager-load the front card. The container is `w-full h-auto`
-                   which collapses to zero height until the image loads, and
-                   the browser's native lazy loader refuses to trigger on
-                   zero-height elements — so lazy here means never. We still
-                   gate stacked backgrounds and auto-rotate behind the
-                   IntersectionObserver, which is where the real cost is. */
-                loading="eager"
+                width={900}
+                height={562}
+                loading={priority ? "eager" : "lazy"}
                 decoding="async"
                 draggable={false}
                 className="w-full h-auto"
