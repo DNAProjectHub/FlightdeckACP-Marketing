@@ -8,6 +8,12 @@ interface ScreenshotCarouselProps {
   priority?: boolean;
   autoRotateInterval?: number; // ms, default 4000, set to 0 to disable
   basePath?: string;
+  /**
+   * When true, renders a single static thumbnail with no auto-rotate, no
+   * stacked background layers, and no click-to-lightbox. Used for cards that
+   * are mounted below the fold and should not do any work until visible.
+   */
+  staticMode?: boolean;
 }
 
 const THUMB_DIR = "thumbs";
@@ -20,13 +26,24 @@ export default function ScreenshotCarousel({
   priority = false,
   autoRotateInterval = DEFAULT_INTERVAL,
   basePath = "/images/screenshots",
+  staticMode = false,
 }: ScreenshotCarouselProps) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [visible, setVisible] = useState(priority); // gate work until in viewport
+  const [hydrated, setHydrated] = useState(false);  // true after first client render
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const count = images.length;
-  const hasMultiple = count > 1;
+  const hasMultiple = count > 1 && !staticMode;
+
+  // Flip to true after hydration so staticMode images only gain their `src`
+  // on the client. This keeps the SSR HTML free of static-mode srcs (so
+  // React can't flush a <link rel=preload> hint for below-the-fold cards)
+  // while still handing the browser a plain <img> with a real src to lazy-
+  // load normally on scroll.
+  useEffect(() => { setHydrated(true); }, []);
 
   const thumb = (name: string) => `${basePath}/${THUMB_DIR}/${name}.jpg`;
   const original = (name: string) => `${basePath}/${ORIGINAL_DIR}/${name}.png`;
@@ -35,11 +52,27 @@ export default function ScreenshotCarousel({
     setActive(i => (i + dir + count) % count);
   }, [count]);
 
+  // Intersection observer: only start timers + stacked backgrounds when this
+  // carousel actually enters the viewport. Priority carousels skip the gate.
   useEffect(() => {
-    if (!hasMultiple || paused || !autoRotateInterval) return;
+    if (priority || visible) return;
+    const el = rootRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") { setVisible(true); return; }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) {
+        setVisible(true);
+        io.disconnect();
+      }
+    }, { rootMargin: "200px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [priority, visible]);
+
+  useEffect(() => {
+    if (!hasMultiple || paused || !autoRotateInterval || !visible) return;
     timerRef.current = setInterval(() => advance(1), autoRotateInterval);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [hasMultiple, paused, autoRotateInterval, advance, active]);
+  }, [hasMultiple, paused, autoRotateInterval, advance, active, visible]);
 
   useEffect(() => {
     if (!lightbox) return;
@@ -51,18 +84,22 @@ export default function ScreenshotCarousel({
   return (
     <>
       <div
+        ref={rootRef}
         className="relative rounded-xl overflow-visible group"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* Stacked background layers — up to 2 visible behind front */}
-        {hasMultiple && images.map((name, i) => {
+        {/* Stacked background layers — up to 2 visible behind front.
+            Only rendered on larger viewports and only after the carousel has
+            entered the viewport, so mobile and below-the-fold sections pay
+            nothing for them. */}
+        {hasMultiple && visible && images.map((name, i) => {
           const offset = ((i - active + count) % count);
           if (offset === 0 || offset > 2) return null;
           return (
             <div
               key={name}
-              className="absolute inset-0 rounded-xl overflow-hidden border border-white/10"
+              className="hidden md:block absolute inset-0 rounded-xl overflow-hidden border border-white/10"
               style={{
                 transform: `translateY(${offset * -6}px) scale(${1 - offset * 0.03})`,
                 opacity: 1 - offset * 0.25,
@@ -75,6 +112,7 @@ export default function ScreenshotCarousel({
                   src={original(name)}
                   alt=""
                   loading="lazy"
+                  decoding="async"
                   draggable={false}
                   className="w-full h-auto"
                 />
@@ -85,20 +123,51 @@ export default function ScreenshotCarousel({
 
         {/* Front card */}
         <div
-          className="relative rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-fd-orange/5 cursor-zoom-in"
+          className={`relative rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-fd-orange/5 ${staticMode ? "" : "cursor-zoom-in"}`}
           style={{ zIndex: count + 1 }}
-          onClick={() => setLightbox(original(images[active]))}
+          onClick={staticMode ? undefined : () => setLightbox(original(images[active]))}
         >
-          <picture>
-            <source media="(max-width: 680px)" srcSet={thumb(images[active])} />
+          {staticMode ? (
+            /* Static-mode preview cards are small on every viewport, so always
+               use the thumb regardless of screen size. `src` is only attached
+               after client hydration (`hydrated` flips in a useEffect) so the
+               SSR HTML has no src → React can't flush a <link rel=preload>
+               hint for below-the-fold cards. Once src appears on the client,
+               `loading="lazy"` lets the browser defer fetching until the
+               card scrolls into view. Explicit width/height reserve the
+               correct aspect ratio so `w-full h-auto` has real height while
+               the src is absent. Thumbs are generated at 1200 px long edge;
+               every current static caller uses portrait Flight School
+               screenshots at 748×1200. */
             <img
-              src={original(images[active])}
+              src={hydrated ? thumb(images[active]) : undefined}
               alt={alt}
-              loading={priority ? "eager" : "lazy"}
+              width={748}
+              height={1200}
+              loading="lazy"
+              decoding="async"
               draggable={false}
               className="w-full h-auto"
             />
-          </picture>
+          ) : (
+            <picture>
+              <source media="(max-width: 680px)" srcSet={thumb(images[active])} />
+              <img
+                src={original(images[active])}
+                alt={alt}
+                /* Eager-load the front card. The container is `w-full h-auto`
+                   which collapses to zero height until the image loads, and
+                   the browser's native lazy loader refuses to trigger on
+                   zero-height elements — so lazy here means never. We still
+                   gate stacked backgrounds and auto-rotate behind the
+                   IntersectionObserver, which is where the real cost is. */
+                loading="eager"
+                decoding="async"
+                draggable={false}
+                className="w-full h-auto"
+              />
+            </picture>
+          )}
           {/* Mask version number in top-right corner */}
           <div
             className="absolute top-0 right-0 w-24 h-8 pointer-events-none"

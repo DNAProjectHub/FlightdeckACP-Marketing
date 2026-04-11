@@ -133,8 +133,12 @@ export default function Problem() {
                   aria-label="Play video"
                 >
                   <img
-                    src={`https://img.youtube.com/vi/${YT_VIDEO_ID}/maxresdefault.jpg`}
+                    src={`https://img.youtube.com/vi/${YT_VIDEO_ID}/hqdefault.jpg`}
                     alt="The Anatomy of an Illusion — Why AI Apps Break"
+                    loading="lazy"
+                    decoding="async"
+                    width={480}
+                    height={360}
                     className="w-full h-auto"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/50 group-hover:bg-black/40 transition-colors">

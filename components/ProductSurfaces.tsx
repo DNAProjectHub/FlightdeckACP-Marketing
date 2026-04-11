@@ -212,23 +212,17 @@ function Region({ region }: { region: SurfaceRegion }) {
             </div>
           </ScrollReveal>
 
-          {/* Full-width carousel */}
+          {/* Full-width carousel — only the active tab is mounted, so inactive
+              tabs cost no DOM, no timers, and no image downloads. */}
           <ScrollReveal delay={0.1}>
             <div
               className="mt-8 relative max-w-4xl mx-auto"
               onMouseEnter={() => setPaused(true)}
               onMouseLeave={() => setPaused(false)}
             >
-              {region.tabs.map((t, i) => (
-                <div
-                  key={t.number}
-                  className={`transition-opacity duration-700 ${
-                    i === active ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"
-                  }`}
-                >
-                  <ScreenshotCarousel images={t.images} alt={t.alt} />
-                </div>
-              ))}
+              <div key={tab.number} className="fd-fade-in">
+                <ScreenshotCarousel images={tab.images} alt={tab.alt} />
+              </div>
               <div className="mt-2 flex items-center justify-between">
                 <FigLabel number={tab.number} />
                 <span className="text-xs text-fd-gray/50">{tab.name}</span>
@@ -238,16 +232,9 @@ function Region({ region }: { region: SurfaceRegion }) {
 
           {/* Active tab body copy */}
           <div className="mt-6 relative min-h-[3rem] max-w-3xl mx-auto text-center">
-            {region.tabs.map((t, i) => (
-              <p
-                key={t.number}
-                className={`text-sm text-fd-gray-light leading-relaxed transition-opacity duration-500 ${
-                  i === active ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"
-                }`}
-              >
-                {t.body}
-              </p>
-            ))}
+            <p key={tab.number} className="text-sm text-fd-gray-light leading-relaxed fd-fade-in">
+              {tab.body}
+            </p>
           </div>
 
           {/* Pills */}

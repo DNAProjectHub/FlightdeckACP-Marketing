@@ -41,29 +41,30 @@ export default function DevModeCallout() {
               onMouseEnter={() => setPaused(true)}
               onMouseLeave={() => setPaused(false)}
             >
-              {/* Screenshot fades between modes */}
-              <div className={`transition-all duration-700 ${devMode ? "opacity-0 absolute inset-0 pointer-events-none" : "opacity-100 relative"}`}>
-                <ScreenshotCarousel
-                  images={[
-                    "Document-Manifest-Inbox",
-                    "Document-Manifest-Icon-Library",
-                    "Document-Manifest-Logos",
-                    "Document-Manifest-Logos-Ingest-Modal",
-                  ]}
-                  alt="FlightDeck Document Manifest in Flight mode"
-                />
-              </div>
-              <div className={`transition-all duration-700 ${devMode ? "opacity-100 relative" : "opacity-0 absolute inset-0 pointer-events-none"}`}>
-                <ScreenshotCarousel
-                  images={[
-                    "Dev-Mode-Documents-Inbox",
-                    "Dev-Mode-Documents-Planning-Tab",
-                    "Dev-Mode-Documents-Icon-Library",
-                    "Dev-Mode-Documents-Logos",
-                    "Dev-Mode-Documents-Logos-2",
-                  ]}
-                  alt="FlightDeck Documents in Developer mode"
-                />
+              {/* Screenshot — only the active mode is mounted. */}
+              <div key={devMode ? "dev" : "flight"} className="fd-fade-in">
+                {devMode ? (
+                  <ScreenshotCarousel
+                    images={[
+                      "Dev-Mode-Documents-Inbox",
+                      "Dev-Mode-Documents-Planning-Tab",
+                      "Dev-Mode-Documents-Icon-Library",
+                      "Dev-Mode-Documents-Logos",
+                      "Dev-Mode-Documents-Logos-2",
+                    ]}
+                    alt="FlightDeck Documents in Developer mode"
+                  />
+                ) : (
+                  <ScreenshotCarousel
+                    images={[
+                      "Document-Manifest-Inbox",
+                      "Document-Manifest-Icon-Library",
+                      "Document-Manifest-Logos",
+                      "Document-Manifest-Logos-Ingest-Modal",
+                    ]}
+                    alt="FlightDeck Document Manifest in Flight mode"
+                  />
+                )}
               </div>
 
               {/* Toggle widget below screenshot */}

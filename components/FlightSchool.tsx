@@ -93,8 +93,14 @@ export default function FlightSchool() {
           </div>
         </ScrollReveal>
 
-        {/* Four phase cards — 2x2 grid on md, single col on mobile */}
-        <ScrollReveal delay={0.1}>
+        {/* Four phase cards — 2x2 grid on md, single col on mobile.
+            NOTE: intentionally NOT wrapped in <ScrollReveal>. The framer-motion
+            reveal wrapper starts at opacity:0, which makes Chrome's native
+            lazy loader refuse to trigger for any <img> beneath it until the
+            animation flips opacity to 1 — so the static preview cards would
+            sit blank forever on mobile. The section heading above keeps its
+            reveal animation; only this grid is direct-rendered. */}
+        <div>
           <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch max-w-5xl mx-auto">
             {phases.map((phase) => (
               <div
@@ -128,7 +134,11 @@ export default function FlightSchool() {
                 <p className="text-[10px] text-fd-gray/70 mb-2 leading-snug">
                   {phase.tagline}
                 </p>
-                <ScreenshotCarousel images={phase.images} alt={phase.alt} autoRotateInterval={3500} />
+                <ScreenshotCarousel
+                  images={[phase.images[0]]}
+                  alt={phase.alt}
+                  staticMode
+                />
                 <div className="mt-2">
                   <FigLabel number={phase.number} />
                 </div>
@@ -138,7 +148,7 @@ export default function FlightSchool() {
               </div>
             ))}
           </div>
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );
