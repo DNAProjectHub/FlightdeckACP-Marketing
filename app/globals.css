@@ -15,20 +15,10 @@
 }
 
 html {
-  height: 100%;
-}
-
-body {
-  height: 100%;
-  overflow-y: scroll;
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
-  -webkit-overflow-scrolling: touch;
-  background-color: var(--color-fd-black);
-  color: var(--color-fd-gray-light);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .snap-section {
@@ -37,6 +27,14 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+body {
+  background-color: var(--color-fd-black);
+  color: var(--color-fd-gray-light);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
