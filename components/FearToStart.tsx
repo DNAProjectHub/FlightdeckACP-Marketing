@@ -81,7 +81,9 @@ export default function FearToStart() {
           <div className="max-w-3xl">
             <SectionLabel number="0.2" label="Failure Mode One" />
             <h2 className="mt-4 text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.1]">
-              It feels dangerous to begin (and for good reason).
+              It feels dangerous to begin
+              <br className="block sm:hidden" />
+              {" "}(and for good reason).
               <br />
               <span className="text-white/70 text-lg sm:text-xl md:text-2xl font-semibold">FlightDeck gives you a safe way in.</span>
             </h2>
