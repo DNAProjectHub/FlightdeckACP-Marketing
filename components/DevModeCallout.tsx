@@ -105,20 +105,20 @@ export default function DevModeCallout() {
               </h2>
               <div className="mt-6 space-y-4 text-base text-fd-gray leading-relaxed">
                 <p>
-                  FlightDeck is a single functional system expressed through
-                  two synchronized vocabularies. Pilot language gives the
-                  product its identity and guided feel — ATC, glide path,
-                  course correction, safe landing. Developer language gives it
-                  precision — System Overview, Schema Explorer, Sessions and
-                  Receipts.
+                  FlightDeck has one system, but two ways of speaking to you,
+                  both familiar, and both designed to suggest how the parts
+                  relate to each other in workflow. In pilot language, you move
+                  through surfaces with familiar names like Air Traffic Control,
+                  Home Terminal, Crew Manifest, and Document Manifest. In
+                  developer naming, those same places become System Overview,
+                  Setup &amp; Onboarding, Agents, Connections &amp; Status, and
+                  Docs, Specs &amp; Governance.
                 </p>
                 <p>
-                  One toggle switches every label in the system. The data, the
-                  governance, the functionality — none of it changes. Only the
-                  labels do. It is the same system speaking two languages
-                  simultaneously: one for founders who want to navigate by
-                  intuition, one for developers who want precise technical
-                  vocabulary. You can switch at any time.
+                  Flip the toggle, and only the labels change. The system
+                  underneath stays the same. Same data. Same structure. Same
+                  functionality. Just a different way of making the product
+                  legible, depending on how you think.
                 </p>
               </div>
             </div>
