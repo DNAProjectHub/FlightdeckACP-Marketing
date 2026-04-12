@@ -9,26 +9,23 @@ export default function FinalCTA() {
       <ScrollReveal>
         <div className="mx-auto max-w-2xl px-6 text-center">
           <h2 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1]">
-            One founder.{" "}
-            <span className="text-fd-gray/60">The right structure. A real product.</span>
+            The pipeline is the product.
+            <br />
+            <span className="text-fd-gray/60">The product is real.</span>
           </h2>
 
           <p className="mt-6 text-base text-fd-gray leading-relaxed">
-            The bet behind FlightDeck is simple: one founder, with the right
-            structure and the right AI tools working inside a governed system,
-            can build and ship a real software product with the speed and
-            discipline of a small company. Not by replacing human judgment with
-            AI, but by giving that founder a system where their thinking is
-            captured, their decisions are organized, their concepts are
-            validated before they are built, and their execution is tracked —
-            instead of scattered across a dozen disconnected tools and forgotten
-            chat windows.
+            FlightDeck solves the moments that kill most AI-built products —
+            the fear of getting started, the collapse in the middle, the
+            back-loaded hard work near the finish line, and the AI that was
+            flattering you the whole way through instead of telling you the
+            truth.
           </p>
 
           <p className="mt-4 text-base text-fd-gray leading-relaxed">
-            FlightDeck is for founders who don&apos;t just want help writing
-            code. It&apos;s for founders who want help building a product,
-            running a company, and keeping the whole thing together as it grows.
+            One founder. The right structure. A governed system that builds
+            structural reality from the first question and never substitutes
+            praise for proof.
           </p>
 
           <p className="mt-4 text-base font-semibold text-white">

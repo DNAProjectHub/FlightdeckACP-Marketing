@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FlightDeck Screenshot Gallery — Preview</title>
+<style>
+/* ── Reset ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0b1120; min-height: 100vh; }
+
+/* ── Gallery Styles ──────────────────────────────────── */
+.fd-gallery {
+  --fd-bg: #0b1120;
+  --fd-surface: #111827;
+  --fd-border: #1e293b;
+  --fd-text: #e2e8f0;
+  --fd-text-muted: #94a3b8;
+  --fd-accent: #38bdf8;
+  --fd-accent-dev: #a78bfa;
+  --fd-radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--fd-text);
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.fd-gallery h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+.fd-gallery .fd-subtitle { color: var(--fd-text-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+
+.fd-gallery-mode-toggle {
+  display: flex; gap: 0; margin-bottom: 2rem;
+  border: 1px solid var(--fd-border); border-radius: 8px;
+  overflow: hidden; width: fit-content;
+}
+.fd-gallery-mode-btn {
+  background: transparent; border: none; color: var(--fd-text-muted);
+  padding: 0.5rem 1.25rem; font-size: 0.875rem; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+}
+.fd-gallery-mode-btn:hover { color: var(--fd-text); background: var(--fd-surface); }
+.fd-gallery-mode-btn.active { background: var(--fd-accent); color: #0b1120; }
+
+.fd-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.75rem;
+}
+@media (max-width: 680px) {
+  .fd-gallery-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+}
+
+.fd-gallery-card {
+  position: relative; background: var(--fd-surface);
+  border: 1px solid var(--fd-border); border-radius: var(--fd-radius);
+  padding: 0.75rem; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.fd-gallery-card:hover {
+  border-color: var(--fd-accent);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
+}
+
+.fd-gallery-label {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 0.5rem; padding: 0 0.25rem;
+}
+.fd-gallery-label-text { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.02em; }
+.fd-gallery-badge-dev {
+  font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em;
+  background: var(--fd-accent-dev); color: #0b1120;
+  padding: 0.1rem 0.4rem; border-radius: 3px;
+}
+.fd-gallery-counter {
+  margin-left: auto; font-size: 0.6875rem;
+  color: var(--fd-text-muted); font-variant-numeric: tabular-nums;
+}
+
+.fd-gallery-stack {
+  position: relative; border-radius: 6px; overflow: visible; padding-top: 12px;
+}
+.fd-gallery-layer, .fd-gallery-front { border-radius: 6px; overflow: hidden; }
+.fd-gallery-layer {
+  position: absolute; top: 0; left: 0; right: 0; pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.fd-gallery-layer img, .fd-gallery-front img {
+  display: block; width: 100%; height: auto; border-radius: 6px;
+}
+.fd-gallery-front {
+  position: relative; cursor: pointer; transition: transform 0.15s;
+}
+.fd-gallery-front:hover { transform: scale(1.01); }
+.fd-gallery-front img { transition: opacity 0.3s ease; }
+
+.fd-gallery-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(11, 17, 32, 0.7); backdrop-filter: blur(4px);
+  border: 1px solid var(--fd-border); color: var(--fd-text);
+  width: 28px; height: 28px; border-radius: 50%;
+  font-size: 1.1rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; opacity: 0; transition: opacity 0.2s;
+}
+.fd-gallery-card:hover .fd-gallery-arrow { opacity: 1; }
+.fd-gallery-arrow:hover { background: rgba(56, 189, 248, 0.2); border-color: var(--fd-accent); }
+.fd-gallery-arrow-left { left: 6px; }
+.fd-gallery-arrow-right { right: 6px; }
+
+.fd-gallery-dots { display: flex; justify-content: center; gap: 5px; margin-top: 0.5rem; }
+.fd-gallery-dot {
+  width: 6px; height: 6px; border-radius: 50%; border: none;
+  background: var(--fd-border); cursor: pointer; padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.fd-gallery-dot.active { background: var(--fd-accent); transform: scale(1.3); }
+.fd-gallery-dot:hover:not(.active) { background: var(--fd-text-muted); }
+
+/* ── Lightbox ────────────────────────────────────────── */
+.fd-lightbox-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem; animation: fd-fade-in 0.2s ease;
+}
+.fd-lightbox-overlay.hidden { display: none; }
+.fd-lightbox-content { position: relative; max-width: 95vw; max-height: 92vh; }
+.fd-lightbox-content img {
+  display: block; max-width: 100%; max-height: 85vh;
+  border-radius: 8px; box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+.fd-lightbox-close {
+  position: absolute; top: -12px; right: -12px;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--fd-border); background: var(--fd-surface);
+  color: var(--fd-text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.fd-lightbox-close:hover { background: #dc2626; }
+.fd-lightbox-caption {
+  text-align: center; margin-top: 0.75rem;
+  font-size: 0.8125rem; color: var(--fd-text-muted);
+}
+@keyframes fd-fade-in { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<div class="fd-gallery" id="gallery">
+  <h1>FlightDeck App Screenshots</h1>
+  <p class="fd-subtitle">Click any card to view full-size. Multi-page applets auto-rotate — hover to pause, use arrows to navigate.</p>
+</div>
+
+<!-- Lightbox -->
+<div class="fd-lightbox-overlay hidden" id="lightbox">
+  <div class="fd-lightbox-content">
+    <button class="fd-lightbox-close" id="lightbox-close">✕</button>
+    <img id="lightbox-img" src="" alt="" />
+    <p class="fd-lightbox-caption" id="lightbox-caption"></p>
+  </div>
+</div>
+
+<script>
+// ── Data ─────────────────────────────────────────────────
+// Paths are relative — open this file from the FlightDeck Screenshots folder
+const THUMB_DIR = "thumbs";
+const ORIG_DIR = "originals";
+
+const GROUPS = [
+  { id:"cockpit", label:"Cockpit", mode:"flight",
+    images:["Cockpit","Cockpit-with-overlay"] },
+  { id:"home-terminal", label:"Home Terminal", mode:"flight",
+    images:["Home-Terminal","Home-Terminal-with-Terminal-Panel","Home-Terminal-with-Notification","Home-Terminal-Cards-Closeup","CoPilot-Briefing-Card-Closeup"] },
+  { id:"crew-manifest", label:"Crew Manifest", mode:"flight",
+    images:["Crew-Manifest"] },
+  { id:"document-manifest", label:"Document Manifest", mode:"flight",
+    images:["Document-Manifest-Inbox","Document-Manifest-Icon-Library","Document-Manifest-Logos","Document-Manifest-Logos-Ingest-Modal","Ingest-Document-Closeup","Document-Manifest-Logos-with-Terminal-Build","Document-Manifest-Logos-with-Terminal-Agent"] },
+  { id:"maintenance", label:"Maintenance", mode:"flight",
+    images:["Maintenance-System-Health"] },
+  { id:"data-structures", label:"Data Structures", mode:"flight",
+    images:["Data-Structures"] },
+  { id:"flights", label:"Flights", mode:"flight",
+    images:["Flights-List","Flight-Planification","Flight-Logs"] },
+  { id:"flight-school", label:"Flight School", mode:"flight",
+    images:["Flight-School-Welcome","Flight-School-Experience-Calibration","Flight-School-Phase1-Intro","Flight-School-Phase1-Communication-Style","Flight-School-Phase1-Humor","Flight-School-Phase1-Mood-Tone"] },
+  { id:"mission-control", label:"Mission Control", mode:"flight",
+    images:["Mission-Control-Card-Closeup","Mission-Control-Create-New-Project","Mission-Control-New-or-Existing","Mission-Control-Project-Role","Mission-Control-Project-Name","Mission-Control-Short-Code","Mission-Control-Project-Description","Mission-Control-Whats-Already-In-Place"] },
+  { id:"tactical-ops", label:"Tactical Ops", mode:"flight",
+    images:["Tactical-Ops-Card-Closeup","Tactical-Ops-Skill-Building-Setup","Tactical-Ops-Skill-Building-Setup-Expanded"] },
+  // Dev Mode
+  { id:"dev-system-overview", label:"System Overview", mode:"dev",
+    images:["Dev-Mode-System-Overview-All-Projects"] },
+  { id:"dev-home-terminal", label:"Home Terminal", mode:"dev",
+    images:["Dev-Mode-Home-Terminal","Dev-Mode-Project-Overview"] },
+  { id:"dev-agents", label:"Agents & Connections", mode:"dev",
+    images:["Dev-Mode-Agents-and-Connections","Dev-Mode-Settings-System-Health","Dev-Mode-Schema-Explorer"] },
+  { id:"dev-documents", label:"Documents", mode:"dev",
+    images:["Dev-Mode-Documents-Inbox","Dev-Mode-Documents-Planning-Tab","Dev-Mode-Documents-Icon-Library","Dev-Mode-Documents-Logos","Dev-Mode-Documents-Logos-2"] },
+  { id:"dev-planification", label:"Flight Planification", mode:"dev",
+    images:["Dev-Mode-Flight-Planification"] },
+  { id:"dev-sprints", label:"Sprints", mode:"dev",
+    images:["Dev-Mode-Sprints"] },
+  { id:"dev-session-history", label:"Session History", mode:"dev",
+    images:["Dev-Mode-Session-History"] },
+];
+
+// ── State ────────────────────────────────────────────────
+let activeMode = "flight";
+const cardState = {};  // groupId → { index, timer, paused }
+
+function thumbSrc(name) { return `${THUMB_DIR}/${name}.jpg`; }
+function origSrc(name)  { return `${ORIG_DIR}/${name}.png`; }
+
+// ── Render ───────────────────────────────────────────────
+function render() {
+  const gallery = document.getElementById("gallery");
+
+  // Keep header, rebuild toggle + grid
+  let html = gallery.querySelector("h1").outerHTML + gallery.querySelector(".fd-subtitle").outerHTML;
+
+  // Mode toggle
+  html += `<div class="fd-gallery-mode-toggle">
+    <button class="fd-gallery-mode-btn ${activeMode==="flight"?"active":""}" onclick="setMode('flight')">Flight Mode</button>
+    <button class="fd-gallery-mode-btn ${activeMode==="dev"?"active":""}" onclick="setMode('dev')">Dev Mode</button>
+  </div>`;
+
+  // Cards
+  html += `<div class="fd-gallery-grid">`;
+  for (const g of GROUPS.filter(g => g.mode === activeMode)) {
+    if (!cardState[g.id]) cardState[g.id] = { index: 0, timer: null, paused: false };
+    const s = cardState[g.id];
+    const n = g.images.length;
+    const multi = n > 1;
+
+    html += `<div class="fd-gallery-card" onmouseenter="pauseCard('${g.id}')" onmouseleave="resumeCard('${g.id}')">`;
+
+    // Label
+    html += `<div class="fd-gallery-label">
+      <span class="fd-gallery-label-text">${g.label}</span>
+      ${g.mode==="dev"?'<span class="fd-gallery-badge-dev">DEV</span>':""}
+      ${multi?`<span class="fd-gallery-counter">${s.index+1}/${n}</span>`:""}
+    </div>`;
+
+    // Stack
+    html += `<div class="fd-gallery-stack">`;
+
+    // Background layers
+    if (multi) {
+      for (let i = 0; i < n; i++) {
+        const offset = ((i - s.index + n) % n);
+        if (offset === 0 || offset > 2) continue;
+        html += `<div class="fd-gallery-layer" style="transform:translateY(${offset*-6}px) scale(${1-offset*0.03}); opacity:${1-offset*0.25}; z-index:${n-offset}">
+          <img src="${thumbSrc(g.images[i])}" alt="" loading="lazy" />
+        </div>`;
+      }
+    }
+
+    // Front card
+    html += `<div class="fd-gallery-front" style="z-index:${n+1}" onclick="openLightbox('${origSrc(g.images[s.index])}','${g.label} — ${g.images[s.index]}')">
+      <img src="${thumbSrc(g.images[s.index])}" alt="${g.label}" loading="lazy" />
+    </div>`;
+
+    // Arrows
+    if (multi) {
+      html += `<button class="fd-gallery-arrow fd-gallery-arrow-left" style="z-index:${n+2}" onclick="event.stopPropagation();advance('${g.id}',-1)">‹</button>`;
+      html += `<button class="fd-gallery-arrow fd-gallery-arrow-right" style="z-index:${n+2}" onclick="event.stopPropagation();advance('${g.id}',1)">›</button>`;
+    }
+
+    html += `</div>`; // stack
+
+    // Dots
+    if (multi) {
+      html += `<div class="fd-gallery-dots">`;
+      for (let i = 0; i < n; i++) {
+        html += `<button class="fd-gallery-dot ${i===s.index?"active":""}" onclick="goTo('${g.id}',${i})"></button>`;
+      }
+      html += `</div>`;
+    }
+
+    html += `</div>`; // card
+  }
+  html += `</div>`; // grid
+
+  gallery.innerHTML = html;
+  startTimers();
+}
+
+// ── Controls ─────────────────────────────────────────────
+function setMode(m) { activeMode = m; stopAllTimers(); render(); }
+
+function advance(id, dir) {
+  const g = GROUPS.find(x => x.id === id);
+  const s = cardState[id];
+  s.index = (s.index + dir + g.images.length) % g.images.length;
+  render();
+}
+
+function goTo(id, i) { cardState[id].index = i; render(); }
+
+function pauseCard(id) { cardState[id].paused = true; clearInterval(cardState[id].timer); }
+function resumeCard(id) {
+  cardState[id].paused = false;
+  const g = GROUPS.find(x => x.id === id);
+  if (g.images.length > 1) startTimer(id);
+}
+
+function startTimer(id) {
+  clearInterval(cardState[id].timer);
+  cardState[id].timer = setInterval(() => advance(id, 1), 4000);
+}
+function startTimers() {
+  for (const g of GROUPS.filter(g => g.mode === activeMode && g.images.length > 1)) {
+    if (!cardState[g.id].paused) startTimer(g.id);
+  }
+}
+function stopAllTimers() {
+  for (const id in cardState) clearInterval(cardState[id].timer);
+}
+
+// ── Lightbox ─────────────────────────────────────────────
+function openLightbox(src, label) {
+  const lb = document.getElementById("lightbox");
+  document.getElementById("lightbox-img").src = src;
+  document.getElementById("lightbox-caption").textContent = label;
+  lb.classList.remove("hidden");
+}
+function closeLightbox() {
+  document.getElementById("lightbox").classList.add("hidden");
+  document.getElementById("lightbox-img").src = "";
+}
+document.getElementById("lightbox").addEventListener("click", closeLightbox);
+document.getElementById("lightbox-close").addEventListener("click", (e) => { e.stopPropagation(); closeLightbox(); });
+document.querySelector(".fd-lightbox-content").addEventListener("click", (e) => e.stopPropagation());
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
+
+// ── Init ─────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>

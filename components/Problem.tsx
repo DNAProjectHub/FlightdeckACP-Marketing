@@ -60,44 +60,48 @@ export default function Problem() {
         <ScrollReveal direction="left">
           <div>
             <SectionLabel number="0.1" label="The Problem" />
-            <h2 className="mt-6 text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1]">
-              You&apos;ve been building a surface.
+            <h2 className="mt-6 text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.1]">
+              Build a real app
               <br />
-              <span className="text-fd-gray/60">Not a system.</span>
+              <span className="text-white/70 text-lg sm:text-xl md:text-2xl font-semibold">
+                before AI convinces you that you already did.
+              </span>
             </h2>
 
             <div className="mt-8 space-y-4 text-base text-fd-gray leading-relaxed">
               <p>
-                Most founders who build with AI hit the same wall. What they
-                built looks real. It has screens. It has buttons. It has an AI
-                that responds. And when they demo it, everything works.
+                The first wall is just getting started. Founders don&apos;t
+                know which tools to choose, how the stack fits together, or
+                what to install. And then there is the terminal — a black box
+                that executes on a real filesystem with no undo, no preview,
+                and no explanation for what it is about to do. FlightDeck is
+                designed so founders can begin safely without being forced into
+                that kind of uncertainty.
+              </p>
+              <p>
+                The second wall is more dangerous, because it comes disguised
+                as progress. Founders do get moving. The AI confirms every
+                step. Screens appear. Buttons work. And then they try to make
+                the thing actually do something real — store data, convert
+                units, find a user&apos;s history — and it doesn&apos;t work.
+                Not because the code is wrong. Because the system underneath
+                was never real.
               </p>
               <p className="text-fd-gray-light font-medium">
-                Until it doesn&apos;t.
+                No data model. No persistence layer. No real schema. No wiring
+                between the things that looked connected.
               </p>
               <p>
-                Because underneath the impressive interface, there&apos;s
-                nothing there. The data is stored as sentences in a text column.
-                The &ldquo;calculation&rdquo; is the AI guessing. The
-                &ldquo;login&rdquo; is a screen with no real authentication
-                behind it. The &ldquo;database&rdquo; is a hardcoded list in
-                the source code. The AI helped build it quickly, so it feels
-                real.
+                This is the default condition of the current AI-builder market.
+                AI is designed to generate plausible output fast — and it is
+                designed to be encouraging, which means it will tell you
+                that you&apos;re doing something extraordinary at exactly the
+                moment you need to hear the truth.
               </p>
               <p className="text-white font-semibold">
-                It isn&apos;t.
-              </p>
-              <p>
-                This is the most dangerous failure mode in AI-assisted
-                development: building a surface without a system. It isn&apos;t
-                just beginner naivety. It is a structural trap that the current
-                generation of AI tools actively encourage — because they are
-                optimized to produce plausible output fast, not correct systems
-                that last.
-              </p>
-              <p>
-                FlightDeck is designed to prevent this. Not by making
-                development harder. By starting earlier.
+                FlightDeck starts before code. It builds structural reality
+                into the product before a single line is written — and it never
+                substitutes praise for proof.
               </p>
             </div>
 
@@ -109,23 +113,18 @@ export default function Problem() {
 
         <ScrollReveal direction="right" delay={0.15}>
           <div className="relative">
-
-            {/* Screenshot — fades in when video ends */}
             <div className={`transition-opacity duration-700 ${videoEnded ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"}`}>
               <ScreenshotCarousel
                 images={["Cockpit", "Cockpit-with-overlay"]}
                 alt="FlightDeck Cockpit showing system health and cautions"
               />
             </div>
-
-            {/* Video slot */}
             <div className={`transition-opacity duration-700 ${videoEnded ? "opacity-0 absolute inset-0 pointer-events-none" : "opacity-100 relative"}`}>
               <div
                 id="problem-yt-player"
                 className="w-full rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-fd-orange/5"
                 style={{ aspectRatio: "16/9", display: started ? "block" : "none" }}
               />
-
               {!started && (
                 <button
                   onClick={handlePlay}
@@ -156,7 +155,6 @@ export default function Problem() {
                 </button>
               )}
             </div>
-
           </div>
         </ScrollReveal>
       </div>

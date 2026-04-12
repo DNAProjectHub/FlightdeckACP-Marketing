@@ -26,30 +26,20 @@ export default function Hero() {
             className="h-10 sm:h-12 w-auto mb-2"
           />
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-none">
-            Build a real app
-            <br />
-            <span className="text-white/50 text-xl sm:text-2xl md:text-3xl font-semibold leading-tight mt-1 block">
-              before AI convinces you that you already did.
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-[1.15]">
+            First, you&apos;re afraid to start.
+            <span className="text-white text-xl sm:text-2xl md:text-3xl font-semibold leading-snug mt-2 block">
+              Then, halfway through, you discover you built a surface, not a system,
+              and you were right to be afraid in the first place.
             </span>
           </h1>
 
-          <div className="mt-3 text-sm sm:text-base text-fd-gray max-w-3xl mx-auto leading-[1.75] space-y-3 text-left">
-            <p>
-              Don&apos;t lose months building an app that will never work. AI
-              makes half-built things look finished and fake things look real by
-              covering for broken data wiring and missing schema structure with
-              hardcoded data, simulated behavior, and convincing output that is
-              not coming from a real working system at all.
-            </p>
-            <p>
-              When you replace the sample data with real data from a real
-              database, that&apos;s the moment you realize what you&apos;ve{" "}
-              <em>actually done</em>: you&apos;ve built a fa&ccedil;ade, not a
-              real building. Walk through the doorway and you&apos;re back in
-              the wilderness.
-            </p>
-          </div>
+          <p className="mt-4 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-[1.75]">
+            Most solo founders hit one of these two walls (and usually, both).
+            FlightDeck is the governed, AI-aided development pipeline for
+            building software that helps you begin safely and prevents false
+            progress before it becomes expensive.
+          </p>
 
           <div className="mt-3 w-full max-w-3xl">
             <ScreenshotCarousel

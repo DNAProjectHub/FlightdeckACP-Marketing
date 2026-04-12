@@ -34,14 +34,12 @@ export default function DevModeCallout() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-          {/* Left — visual */}
           <ScrollReveal direction="left">
             <div
               className="relative"
               onMouseEnter={() => setPaused(true)}
               onMouseLeave={() => setPaused(false)}
             >
-              {/* Screenshot — only the active mode is mounted. */}
               <div key={devMode ? "dev" : "flight"} className="fd-fade-in">
                 {devMode ? (
                   <ScreenshotCarousel
@@ -66,8 +64,6 @@ export default function DevModeCallout() {
                   />
                 )}
               </div>
-
-              {/* Toggle widget below screenshot */}
               <div className="mt-4 rounded-lg border border-fd-border bg-fd-surface overflow-hidden cursor-pointer select-none" onClick={toggle}>
                 <div className="flex items-center justify-between px-3 py-2 border-b border-fd-border">
                   <div className="relative flex rounded-full bg-fd-black p-0.5">
@@ -99,29 +95,30 @@ export default function DevModeCallout() {
             </div>
           </ScrollReveal>
 
-          {/* Right — text */}
           <ScrollReveal direction="right" delay={0.15}>
             <div>
               <SectionLabel number="0.3" label="Two Vocabularies" />
-              <h2 className="mt-6 text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1]">
-                Aviation metaphors,
+              <h2 className="mt-6 text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.1]">
+                Pilot language or developer naming.
                 <br />
-                <span className="text-fd-gray/60">or developer naming.</span>
+                <span className="text-white/70 text-lg sm:text-xl md:text-2xl font-semibold">One toggle.</span>
               </h2>
               <div className="mt-6 space-y-4 text-base text-fd-gray leading-relaxed">
                 <p>
-                  FlightDeck knows that not every founder needs the same level of
-                  guidance, and not every founder wants to navigate by metaphor. So
-                  the entire product has two synchronized vocabularies — not two
-                  different products. One toggle switches every label in the system.
-                  The data, the governance, the functionality — none of it changes.
-                  Only the labels do.
+                  FlightDeck is a single functional system expressed through
+                  two synchronized vocabularies. Pilot language gives the
+                  product its identity and guided feel — ATC, glide path,
+                  course correction, safe landing. Developer language gives it
+                  precision — System Overview, Schema Explorer, Sessions and
+                  Receipts.
                 </p>
                 <p>
-                  It is the same system speaking two languages simultaneously: one
-                  for founders who want to navigate by intuition, one for developers
-                  who want precise technical vocabulary. You can switch at any time.
-                  They are two views of one product.
+                  One toggle switches every label in the system. The data, the
+                  governance, the functionality — none of it changes. Only the
+                  labels do. It is the same system speaking two languages
+                  simultaneously: one for founders who want to navigate by
+                  intuition, one for developers who want precise technical
+                  vocabulary. You can switch at any time.
                 </p>
               </div>
             </div>

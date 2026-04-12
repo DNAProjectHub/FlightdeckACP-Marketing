@@ -28,8 +28,8 @@ const regions: SurfaceRegion[] = [
   {
     number: "1.0",
     label: "Plan",
-    headingLine1: "Turn ideas into",
-    headingLine2: "governed specs.",
+    headingLine1: "Turn ideas",
+    headingLine2: "into governed specs.",
     visualSide: "right",
     intro:
       "Every plan, specification, policy, design document, wireframe, and visual asset in the system — classified, searchable, and health-checked. Every document has a live health indicator. And when it\u2019s red, the system doesn\u2019t just show you a colored dot. It tells you what\u2019s wrong, why it happened, and gives you a button to fix it.",
@@ -104,8 +104,8 @@ const regions: SurfaceRegion[] = [
   {
     number: "3.0",
     label: "Govern",
-    headingLine1: "Receipts for",
-    headingLine2: "everything.",
+    headingLine1: "Receipts",
+    headingLine2: "for everything.",
     visualSide: "right",
     intro:
       "Session history, decisions, commits, and receipts. Nothing fails silently — when something goes wrong, FlightDeck tells you what happened, why it matters, and what to do about it. In plain language. With a button to fix it.",
@@ -195,15 +195,14 @@ function Region({ region }: { region: SurfaceRegion }) {
         className="snap-section border-t border-fd-border py-16"
       >
         <div className="mx-auto max-w-6xl px-6">
-          {/* Top row: heading left, intro right — balanced */}
           <ScrollReveal>
             <div className="grid lg:grid-cols-[2fr_3fr] gap-8 lg:gap-12 items-end">
               <div>
                 <SectionLabel number={region.number} label={region.label} />
-                <h2 className="mt-4 text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.05]">
+                <h2 className="mt-4 text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.05]">
                   {region.headingLine1}
                   <br />
-                  <span className="text-fd-gray/60">{region.headingLine2}</span>
+                  <span className="text-white/70 text-lg sm:text-xl md:text-2xl font-semibold">{region.headingLine2}</span>
                 </h2>
               </div>
               <p className="text-base text-fd-gray leading-relaxed">
@@ -212,8 +211,6 @@ function Region({ region }: { region: SurfaceRegion }) {
             </div>
           </ScrollReveal>
 
-          {/* Full-width carousel — only the active tab is mounted, so inactive
-              tabs cost no DOM, no timers, and no image downloads. */}
           <ScrollReveal delay={0.1}>
             <div
               className="mt-8 relative max-w-4xl mx-auto"
@@ -230,14 +227,12 @@ function Region({ region }: { region: SurfaceRegion }) {
             </div>
           </ScrollReveal>
 
-          {/* Active tab body copy */}
           <div className="mt-6 relative min-h-[3rem] max-w-3xl mx-auto text-center">
             <p key={tab.number} className="text-sm text-fd-gray-light leading-relaxed fd-fade-in">
               {tab.body}
             </p>
           </div>
 
-          {/* Pills */}
           <div className="mt-6 flex flex-wrap justify-center gap-2">
             {region.tabs.map((t, i) => (
               <button

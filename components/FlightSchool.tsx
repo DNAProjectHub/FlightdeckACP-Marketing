@@ -85,10 +85,14 @@ export default function FlightSchool() {
               <span className="text-fd-gray/60">Flight School.</span>
             </h2>
             <p className="mt-3 text-sm text-fd-gray leading-relaxed max-w-2xl">
-              Before you touch a codebase, FlightDeck configures your AI
-              copilot. Tell it how you work, what your product is, how your
-              crew should behave, and what your product should look like. Four
-              modules. Nothing is saved until you review and approve.
+              Before you touch a codebase, FlightDeck walks you through four
+              structured modules that configure your AI co-pilot, define your
+              project, create reusable workflows, and establish your
+              product&apos;s visual foundation. The governance produced here
+              travels with every session — it tells your AI how to behave, what
+              it can and cannot do without your sign-off, and explicitly
+              prevents the empty encouragement that makes bad builds feel like
+              good progress. The encouragement stops. The governance starts.
             </p>
           </div>
         </ScrollReveal>
