@@ -192,7 +192,7 @@ function Region({ region }: { region: SurfaceRegion }) {
     <ScrollReveal>
       <div
         ref={sectionRef}
-        className="snap-section border-t border-fd-border pt-8 pb-6 !justify-start"
+        className="snap-section border-t border-fd-border py-16"
       >
         <div className="mx-auto max-w-6xl px-6 w-full">
           <ScrollReveal>
@@ -213,7 +213,7 @@ function Region({ region }: { region: SurfaceRegion }) {
 
           <ScrollReveal delay={0.1}>
             <div
-              className="mt-6 relative max-w-4xl mx-auto"
+              className="mt-8 relative max-w-4xl mx-auto"
               onMouseEnter={() => setPaused(true)}
               onMouseLeave={() => setPaused(false)}
             >
@@ -227,13 +227,13 @@ function Region({ region }: { region: SurfaceRegion }) {
             </div>
           </ScrollReveal>
 
-          <div className="mt-4 relative min-h-[3rem] max-w-3xl mx-auto text-center">
+          <div className="mt-6 relative min-h-[3rem] max-w-3xl mx-auto text-center">
             <p key={tab.number} className="text-sm text-fd-gray-light leading-relaxed fd-fade-in">
               {tab.body}
             </p>
           </div>
 
-          <div className="mt-4 flex flex-wrap justify-center gap-2">
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
             {region.tabs.map((t, i) => (
               <button
                 key={t.number}
@@ -258,7 +258,7 @@ function Region({ region }: { region: SurfaceRegion }) {
               </button>
             ))}
           </div>
-          <p className="mt-2 text-center text-[10px] text-fd-gray/30 tracking-widest uppercase">← → to browse</p>
+          <p className="mt-3 text-center text-[10px] text-fd-gray/30 tracking-widest uppercase">← → to browse</p>
         </div>
       </div>
     </ScrollReveal>
