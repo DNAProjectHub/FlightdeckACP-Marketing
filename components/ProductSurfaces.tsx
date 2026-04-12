@@ -192,7 +192,7 @@ function Region({ region }: { region: SurfaceRegion }) {
     <ScrollReveal>
       <div
         ref={sectionRef}
-        className="snap-section border-t border-fd-border py-16"
+        className="snap-section border-t border-fd-border pt-[5.5rem] pb-14"
       >
         <div className="mx-auto max-w-6xl px-6 w-full">
           <ScrollReveal>

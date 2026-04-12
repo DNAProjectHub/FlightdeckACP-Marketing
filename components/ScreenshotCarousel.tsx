@@ -38,12 +38,6 @@ export default function ScreenshotCarousel({
   const count = images.length;
   const hasMultiple = count > 1 && !staticMode;
 
-  // Flip to true after hydration so non-priority images only gain their
-  // `src` on the client. This keeps the SSR HTML free of srcs for every
-  // carousel except Hero (which passes `priority`), so React can't flush
-  // `<link rel=preload>` hints for below-the-fold images. Once src appears
-  // on the client, `loading="lazy"` lets the browser defer fetching until
-  // the image actually scrolls into view.
   useEffect(() => { setHydrated(true); }, []);
 
   const thumb = (name: string) => `${basePath}/${THUMB_DIR}/${name}.webp`;
@@ -53,8 +47,6 @@ export default function ScreenshotCarousel({
     setActive(i => (i + dir + count) % count);
   }, [count]);
 
-  // Intersection observer: only start timers + stacked backgrounds when this
-  // carousel actually enters the viewport. Priority carousels skip the gate.
   useEffect(() => {
     if (priority || visible) return;
     const el = rootRef.current;
@@ -90,10 +82,6 @@ export default function ScreenshotCarousel({
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* Stacked background layers — up to 2 visible behind front.
-            Only rendered on larger viewports and only after the carousel has
-            entered the viewport, so mobile and below-the-fold sections pay
-            nothing for them. */}
         {hasMultiple && visible && images.map((name, i) => {
           const offset = ((i - active + count) % count);
           if (offset === 0 || offset > 2) return null;
@@ -129,16 +117,6 @@ export default function ScreenshotCarousel({
           onClick={staticMode ? undefined : () => setLightbox(original(images[active]))}
         >
           {staticMode ? (
-            /* Static-mode preview cards are small on every viewport, so always
-               use the thumb regardless of screen size. `src` is only attached
-               after client hydration, so the SSR HTML has no src and React
-               can't flush a `<link rel=preload>` hint for these cards. Once
-               src appears on the client, `loading="lazy"` defers the fetch
-               until the card scrolls into view. Explicit width/height reserve
-               the correct aspect ratio so `w-full h-auto` has real height
-               while src is absent. Thumbs are 900 px on the long edge; every
-               current static caller uses portrait Flight School screenshots
-               which resize to ~561×900. */
             <img
               src={hydrated ? thumb(images[active]) : undefined}
               alt={alt}
@@ -150,17 +128,6 @@ export default function ScreenshotCarousel({
               className="w-full h-auto"
             />
           ) : (
-            /* Non-static front card. Only `priority` carousels (Hero) ship a
-               src in the SSR HTML; everything else defers src attachment
-               until client hydration, then lets `loading="lazy"` take over.
-               This means:
-                 - Below-the-fold carousels are never SSR-preloaded
-                 - They don't fetch until the user scrolls close to them
-                 - Hero still loads immediately on first paint
-               Explicit width/height (900×562 ≈ 16/10) reserves correct
-               landscape aspect ratio so the container has real height while
-               src is absent. Mobile uses WebP thumbs via <source>; desktop
-               falls back to originals/*.png via <img src>. */
             <picture>
               {(priority || hydrated) && (
                 <source media="(max-width: 680px)" srcSet={thumb(images[active])} />
@@ -184,7 +151,7 @@ export default function ScreenshotCarousel({
           />
         </div>
 
-        {/* Arrow controls — appear on hover, min 44px tap targets */}
+        {/* Arrow controls */}
         {hasMultiple && (
           <>
             <button
@@ -233,16 +200,13 @@ export default function ScreenshotCarousel({
         </div>
       )}
 
-      {/* Lightbox — full-size original PNG */}
+      {/* Lightbox — click anywhere to close */}
       {lightbox && (
         <div
           className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm cursor-zoom-out p-4 sm:p-8"
           onClick={() => setLightbox(null)}
         >
-          <div
-            className="relative max-w-[90vw] max-h-[90vh]"
-            onClick={e => e.stopPropagation()}
-          >
+          <div className="relative max-w-[90vw] max-h-[90vh]">
             <button
               onClick={() => setLightbox(null)}
               className="absolute -top-3 -right-3 z-10 w-7 h-7 rounded-full bg-fd-black border border-white/20 text-white text-sm flex items-center justify-center hover:bg-fd-surface transition-colors"
