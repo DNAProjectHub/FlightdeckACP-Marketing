@@ -15,23 +15,29 @@ export default function FinalCTA() {
           </h2>
 
           <p className="mt-6 text-base text-fd-gray leading-relaxed">
-            FlightDeck solves the moments that kill most AI-built products —
-            the fear of getting started, the collapse in the middle, the
-            back-loaded hard work near the finish line, and the AI that was
-            flattering you the whole way through instead of telling you the
-            truth.
+            Most AI-built products fail at one of four moments: when the
+            founder can&apos;t begin safely, when what looked real turns out
+            to be a facade, not a building, when the hard work at the end
+            arrives without warning, or when the AI has been flattering the
+            founder the whole time instead of telling the truth.
           </p>
 
           <p className="mt-4 text-base text-fd-gray leading-relaxed">
-            One founder. The right structure. A governed system that builds
-            structural reality from the first question and never substitutes
-            praise for proof.
+            FlightDeck solves all four. Not by making development simple. By
+            making the decisions that matter happen at the right time, in the
+            right order, with the right support — so the thing you build is
+            actually real when you&apos;re done.
+          </p>
+
+          <p className="mt-4 text-base text-fd-gray leading-relaxed">
+            One founder. A governed system. No blank screens. No facades.
+            No surprises at the end.
           </p>
 
           <p className="mt-4 text-base font-semibold text-white">
-            FlightDeck is the governed control plane for solo founders building
-            real software with AI. That is the category. That is the bet. And
-            that is why the pipeline is the product.
+            FlightDeck is the governed control plane for solo founders
+            building real software with AI. That is the category. That is
+            the bet. And that is why the pipeline is the product.
           </p>
 
           <Link

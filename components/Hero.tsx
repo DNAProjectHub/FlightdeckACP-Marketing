@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import ScreenshotCarousel from "./ScreenshotCarousel";
 import ProofStrip from "./ProofStrip";
 
 export default function Hero() {
@@ -23,42 +22,48 @@ export default function Hero() {
             width={551}
             height={199}
             priority
-            className="h-10 sm:h-12 w-auto mb-2"
+            className="h-10 sm:h-12 w-auto mb-6"
           />
 
+          {/* MacBook terminal image — fear lands before copy */}
+          <div className="w-full max-w-3xl mb-8 rounded-xl overflow-hidden border border-white/10">
+            <Image
+              src="/images/macbookhomebrewuse.png"
+              alt="Terminal command on a MacBook — the moment most founders freeze"
+              width={1320}
+              height={880}
+              priority
+              className="w-full h-auto"
+            />
+          </div>
+
+          {/* Founder statement — H1 primary tier */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-[1.15]">
-            First, you&apos;re afraid to start.
-            <span className="text-white text-xl sm:text-2xl md:text-3xl font-semibold leading-snug mt-2 block">
-              Then, halfway through, you discover you built a surface, not a system,
-              and you were right to be afraid in the first place.
-            </span>
+            If this terrifies you, you&apos;re not alone.
+            <br />
+            That&apos;s why I built FlightDeck.
           </h1>
 
+          {/* Two-wall framing — secondary tier, clearly smaller */}
+          <p className="mt-4 text-xl sm:text-2xl md:text-3xl font-semibold text-white leading-snug max-w-3xl">
+            First, you&apos;re afraid to start.
+            <br />
+            Then, halfway through, you discover you built a facade, not a building,
+            <br className="hidden sm:block" />
+            {" "}and you were right to be afraid in the first place.
+          </p>
+
+          {/* Body */}
           <p className="mt-4 text-sm sm:text-base text-fd-gray max-w-2xl mx-auto leading-[1.75]">
             Most solo founders hit one of these two walls (and usually, both).
             FlightDeck is the governed, AI-aided development pipeline for
             building software that helps you begin safely and prevents false
             progress before it becomes expensive.
           </p>
-
-          <div className="mt-3 w-full max-w-3xl">
-            <ScreenshotCarousel
-              images={[
-                "Home-Terminal",
-                "Home-Terminal-with-Terminal-Panel",
-                "Home-Terminal-with-Notification",
-                "Cockpit",
-                "Cockpit-with-overlay",
-                "Crew-Manifest",
-              ]}
-              alt="FlightDeck — project command and overview"
-              priority
-            />
-          </div>
         </motion.div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-6">
         <ProofStrip />
       </div>
     </section>

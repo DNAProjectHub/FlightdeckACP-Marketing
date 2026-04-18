@@ -89,7 +89,7 @@ export default function DevModeCallout() {
                 </div>
               </div>
               <div className="mt-2 flex items-center justify-between">
-                <FigLabel number="0.3" />
+                <FigLabel number="07" />
                 <p className="text-[10px] text-fd-gray/40">hover to pause · click to toggle</p>
               </div>
             </div>
@@ -97,7 +97,7 @@ export default function DevModeCallout() {
 
           <ScrollReveal direction="right" delay={0.15}>
             <div>
-              <SectionLabel number="0.3" label="Two Vocabularies" />
+              <SectionLabel number="07" label="Two Vocabularies" />
               <h2 className="mt-6 text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight leading-[1.1]">
                 Pilot language or developer naming.
                 <br />

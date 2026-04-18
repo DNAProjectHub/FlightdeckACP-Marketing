@@ -1,9 +1,13 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import FearToStart from "@/components/FearToStart";
-import Problem from "@/components/Problem";
+import ProblemOne from "@/components/ProblemOne";
+import SolutionOne from "@/components/SolutionOne";
+import ProblemTwo from "@/components/ProblemTwo";
+import SolutionTwo from "@/components/SolutionTwo";
+import HowItWorks from "@/components/HowItWorks";
+import Pipeline from "@/components/Pipeline";
 import DevModeCallout from "@/components/DevModeCallout";
-import ProductSurfaces from "@/components/ProductSurfaces";
+import ReceiptsMemory from "@/components/ReceiptsMemory";
 import FinalCTA from "@/components/FinalCTA";
 import SnapNavigator from "@/components/SnapNavigator";
 
@@ -14,10 +18,14 @@ export default function Home() {
       <SnapNavigator />
       <main>
         <Hero />
-        <FearToStart />
-        <Problem />
+        <ProblemOne />
+        <SolutionOne />
+        <ProblemTwo />
+        <SolutionTwo />
+        <HowItWorks />
+        <Pipeline />
         <DevModeCallout />
-        <ProductSurfaces />
+        <ReceiptsMemory />
         <FinalCTA />
       </main>
     </>
