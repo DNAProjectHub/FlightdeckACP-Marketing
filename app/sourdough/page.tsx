@@ -69,20 +69,22 @@ export default function SourdoughPage() {
       : 0;
   const starterWater = starterAmount - starterFlour;
 
-  const flourToAddTotal = Math.max(0, totalFlour - starterFlour);
-  const waterToAdd = Math.max(0, waterGrams - starterWater);
-
   const flourRows = flours.map((f) => {
-    const totalGrams = (f.percentage / 100) * totalFlour;
-    const starterShare =
-      flourPercentSum > 0
-        ? (f.percentage / flourPercentSum) * starterFlour
-        : 0;
-    const toAdd = Math.max(0, totalGrams - starterShare);
-    return { ...f, totalGrams, toAdd };
+    const grams = (f.percentage / 100) * totalFlour;
+    return { ...f, grams };
   });
 
-  const totalDough = totalFlour + waterGrams + saltGrams;
+  const totalDoughFlour = totalFlour + starterFlour;
+  const totalDoughWater = waterGrams + starterWater;
+  const totalDough = totalDoughFlour + totalDoughWater + saltGrams;
+
+  const effectiveHydration =
+    totalDoughFlour > 0 ? (totalDoughWater / totalDoughFlour) * 100 : 0;
+  const effectiveSaltPercent =
+    totalDoughFlour > 0 ? (saltGrams / totalDoughFlour) * 100 : 0;
+  const prefermentedFlourPercent =
+    totalFlour > 0 ? (starterFlour / totalFlour) * 100 : 0;
+
   const weightedExtraction =
     flourPercentSum > 0
       ? flours.reduce((s, f) => s + f.extraction * f.percentage, 0) /
@@ -217,11 +219,10 @@ export default function SourdoughPage() {
 
               <div className="mt-4 space-y-3">
                 <div className="hidden grid-cols-12 gap-2 px-1 text-[10px] font-medium uppercase tracking-wider text-fd-gray sm:grid">
-                  <div className="col-span-4">Flour</div>
+                  <div className="col-span-5">Flour</div>
                   <div className="col-span-2">Extraction</div>
                   <div className="col-span-2">% of flour</div>
-                  <div className="col-span-2">Total g</div>
-                  <div className="col-span-1">To add</div>
+                  <div className="col-span-2">Grams</div>
                   <div className="col-span-1"></div>
                 </div>
 
@@ -230,7 +231,7 @@ export default function SourdoughPage() {
                     key={f.id}
                     className="grid grid-cols-2 gap-2 rounded-lg border border-fd-border bg-fd-black/40 p-3 sm:grid-cols-12 sm:items-center sm:border-0 sm:bg-transparent sm:p-0"
                   >
-                    <label className="col-span-2 sm:col-span-4">
+                    <label className="col-span-2 sm:col-span-5">
                       <span className="mb-1 block text-[10px] uppercase text-fd-gray sm:hidden">
                         Flour
                       </span>
@@ -291,18 +292,10 @@ export default function SourdoughPage() {
                     </label>
                     <div className="sm:col-span-2">
                       <span className="mb-1 block text-[10px] uppercase text-fd-gray sm:hidden">
-                        Total
+                        Grams
                       </span>
                       <div className="text-sm text-white">
-                        {fmt(f.totalGrams)} g
-                      </div>
-                    </div>
-                    <div className="sm:col-span-1">
-                      <span className="mb-1 block text-[10px] uppercase text-fd-gray sm:hidden">
-                        To add
-                      </span>
-                      <div className="text-sm text-fd-gray">
-                        {fmt(f.toAdd)} g
+                        {fmt(f.grams)} g
                       </div>
                     </div>
                     <div className="col-span-2 flex justify-end sm:col-span-1">
@@ -331,8 +324,8 @@ export default function SourdoughPage() {
                 <span className="text-fd-gray-light">
                   {fmt(weightedExtraction, 1)}%
                 </span>
-                . &quot;To add&quot; subtracts the starter&apos;s flour share so
-                you weigh out the right amount at the bench.
+                . These flours are the static 100% baseline. The starter adds
+                its own flour and water on top.
               </p>
             </div>
 
@@ -366,16 +359,20 @@ export default function SourdoughPage() {
                 </div>
                 <dl className="mt-4 space-y-1 text-xs">
                   <div className="flex justify-between">
-                    <dt className="text-fd-gray">Total water</dt>
+                    <dt className="text-fd-gray">Water added</dt>
                     <dd className="text-white">{fmt(waterGrams)} g</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt className="text-fd-gray">Effective hydration</dt>
+                    <dt className="text-fd-gray">Baker&apos;s %</dt>
                     <dd className="text-white">{fmt(waterPercent, 2)}%</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt className="text-fd-gray">Water to add at mix</dt>
-                    <dd className="text-fd-gray-light">{fmt(waterToAdd)} g</dd>
+                    <dt className="text-fd-gray">
+                      Total water (incl. starter)
+                    </dt>
+                    <dd className="text-fd-gray-light">
+                      {fmt(totalDoughWater)} g
+                    </dd>
                   </div>
                 </dl>
               </div>
@@ -475,8 +472,9 @@ export default function SourdoughPage() {
                 </div>
               </dl>
               <p className="mt-3 text-xs text-fd-gray">
-                Both are counted toward the totals. Your mix only needs the
-                remaining flour and water listed in the recipe.
+                Starter flour and water are added on top of the recipe — they
+                bump total flour, total water, and the effective hydration of
+                the final dough.
               </p>
             </div>
           </section>
@@ -489,14 +487,17 @@ export default function SourdoughPage() {
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-fd-orange">
                   Recipe totals
                 </h2>
+                <p className="mt-1 text-xs text-fd-gray">
+                  Base recipe → with starter folded in.
+                </p>
                 <dl className="mt-4 space-y-2 text-sm">
                   <Row
-                    label="Total flour"
+                    label="Flour"
                     value={`${fmt(totalFlour)} g`}
                     sub="100%"
                   />
                   <Row
-                    label="Total water"
+                    label="Water"
                     value={`${fmt(waterGrams)} g`}
                     sub={`${fmt(waterPercent, 1)}%`}
                   />
@@ -508,13 +509,25 @@ export default function SourdoughPage() {
                   <Row
                     label="Starter"
                     value={`${fmt(starterAmount)} g`}
-                    sub={`${
-                      totalFlour > 0
-                        ? fmt((starterAmount / totalFlour) * 100, 1)
-                        : "0"
-                    }% of flour`}
+                    sub={`${fmt(prefermentedFlourPercent, 1)}% pre-fermented flour`}
                   />
-                  <div className="my-2 h-px bg-fd-border" />
+                  <div className="my-3 h-px bg-fd-border" />
+                  <Row
+                    label="Total flour"
+                    value={`${fmt(totalDoughFlour)} g`}
+                    sub="incl. starter flour"
+                  />
+                  <Row
+                    label="Total water"
+                    value={`${fmt(totalDoughWater)} g`}
+                    sub={`${fmt(effectiveHydration, 1)}% effective hydration`}
+                  />
+                  <Row
+                    label="Salt (effective)"
+                    value={`${fmt(saltGrams, 2)} g`}
+                    sub={`${fmt(effectiveSaltPercent, 2)}%`}
+                  />
+                  <div className="my-3 h-px bg-fd-border" />
                   <Row
                     label="Total dough"
                     value={`${fmt(totalDough)} g`}
@@ -537,12 +550,12 @@ export default function SourdoughPage() {
                           ({fmt(f.extraction, 0)}% ext.)
                         </span>
                       </span>
-                      <span className="text-white">{fmt(f.toAdd)} g</span>
+                      <span className="text-white">{fmt(f.grams)} g</span>
                     </li>
                   ))}
                   <li className="flex justify-between gap-2">
                     <span className="text-fd-gray-light">Water</span>
-                    <span className="text-white">{fmt(waterToAdd)} g</span>
+                    <span className="text-white">{fmt(waterGrams)} g</span>
                   </li>
                   <li className="flex justify-between gap-2">
                     <span className="text-fd-gray-light">Salt</span>
@@ -553,12 +566,9 @@ export default function SourdoughPage() {
                     <span className="text-white">{fmt(starterAmount)} g</span>
                   </li>
                   <li className="mt-2 flex justify-between gap-2 border-t border-fd-border pt-2 text-xs">
-                    <span className="text-fd-gray">Sum check</span>
+                    <span className="text-fd-gray">Total</span>
                     <span className="text-fd-gray-light">
-                      {fmt(
-                        flourToAddTotal + waterToAdd + saltGrams + starterAmount,
-                      )}{" "}
-                      g
+                      {fmt(totalDough)} g
                     </span>
                   </li>
                 </ul>
@@ -567,8 +577,7 @@ export default function SourdoughPage() {
               {flourSumOff && (
                 <div className="rounded-lg border border-fd-yellow/40 bg-fd-yellow/5 px-4 py-3 text-xs text-fd-yellow">
                   Flour percentages currently sum to {fmt(flourPercentSum, 2)}%.
-                  Totals assume the entered &quot;total flour&quot; weight, so
-                  your mix sheet may be off until the rows total 100%.
+                  They should add up to 100% of the entered total flour weight.
                 </div>
               )}
             </div>
